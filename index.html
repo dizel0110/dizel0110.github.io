@@ -17,6 +17,7 @@
       --button-hover: #238F44;
     }
 
+    /* Light Theme */
     @media (prefers-color-scheme: light) {
       :root {
         --bg: #FFFFFF;
@@ -74,6 +75,7 @@
       line-height: 1.6;
     }
 
+    /* Projects */
     .projects {
       margin: 50px 0;
     }
@@ -104,6 +106,7 @@
       margin-top: 8px;
     }
 
+    /* Hire Me Button */
     .cta {
       text-align: center;
       margin: 40px 0;
@@ -122,6 +125,7 @@
       background: var(--button-hover);
     }
 
+    /* Theme Toggle */
     .theme-toggle {
       position: absolute;
       top: 20px;
@@ -135,6 +139,7 @@
       color: var(--text);
     }
 
+    /* Links */
     .links {
       display: flex;
       justify-content: center;
@@ -168,6 +173,7 @@
       <div class="username">&lt;dizel0110&gt;</div>
     </header>
 
+    <!-- Ваш баннер -->
     <img src="https://gist.githubusercontent.com/dizel0110/46d3ae8cabf2724687a6ce6a6a16ad29/raw/3be35bc55ac567836f3ef6ae6bb8a28322cc1d22/banner.svg" alt="Tech Banner" class="banner" />
 
     <p class="bio">
@@ -175,16 +181,32 @@
       ML Engineer. Python-powered. Advocate for local LLMs and open AI.
     </p>
 
+    <!-- Projects -->
     <div class="projects">
-      <h2>🚀 My GitHub Projects</h2>
-      <p id="loading">Loading projects...</p>
-      <div id="projects-container"></div>
+      <h2>🚀 Projects</h2>
+      <div class="project-card">
+        <h3>Autonomous Agent Team</h3>
+        <p>Multi-agent system using CrewAI + LangGraph for automated data analysis and reporting.</p>
+        <div class="tech">Python • LangChain • GCP • ChromaDB</div>
+      </div>
+      <div class="project-card">
+        <h3>Local RAG Assistant</h3>
+        <p>Privacy-first chatbot with document retrieval using Ollama, Llama 3, and FastAPI.</p>
+        <div class="tech">Ollama • LangChain • FastAPI • React</div>
+      </div>
+      <div class="project-card">
+        <h3>ML Pipeline Orchestration</h3>
+        <p>Scalable training and inference pipeline with MLflow, RabbitMQ, and Django.</p>
+        <div class="tech">PyTorch • MLflow • RabbitMQ • Docker</div>
+      </div>
     </div>
 
+    <!-- Hire Me Button -->
     <div class="cta">
       <a href="https://t.me/dizel0110" target="_blank" class="btn">Hire Me</a>
     </div>
 
+    <!-- Links -->
     <div class="links">
       <a href="https://github.com/dizel0110" target="_blank">GitHub</a>
       <a href="https://www.linkedin.com/in/dizel0110/" target="_blank">LinkedIn</a>
@@ -198,50 +220,11 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const container = document.getElementById("projects-container");
-      const loading = document.getElementById("loading");
-
-      fetch("https://api.github.com/users/dizel0110/repos?sort=updated&per_page=5")
-        .then(response => response.json())
-        .then(repos => {
-          loading.remove();
-          if (repos.length === 0) {
-            container.innerHTML = "<p>No public repositories found.</p>";
-            return;
-          }
-
-          const userRepos = repos.filter(repo => !repo.fork);
-
-          userRepos.forEach(repo => {
-            const card = document.createElement("div");
-            card.className = "project-card";
-
-            const name = repo.name;
-            const description = repo.description || "No description provided.";
-            const language = repo.language || "Unknown";
-            const stars = repo.stargazers_count;
-            const url = repo.html_url;
-
-            card.innerHTML = `
-              <h3><a href="${url}" target="_blank" style="color: var(--accent); text-decoration: none;">${name}</a></h3>
-              <p>${description}</p>
-              <div class="tech">
-                ${language} • ⭐ ${stars}
-              </div>
-            `;
-            container.appendChild(card);
-          });
-        })
-        .catch(err => {
-          loading.textContent = "Failed to load projects.";
-          console.error("GitHub API error:", err);
-        });
-    });
-
+    // Theme toggle
     const toggle = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
+    // Check saved preference
     const currentTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
     if (currentTheme === 'light') {
       document.documentElement.style.setProperty('--bg', '#FFFFFF');
@@ -255,6 +238,7 @@
     toggle.addEventListener('click', () => {
       const isLight = document.documentElement.style.getPropertyValue('--bg') === '#FFFFFF';
       if (isLight) {
+        // Switch to dark
         document.documentElement.style.setProperty('--bg', '#0D1117');
         document.documentElement.style.setProperty('--text', '#C9D1D9');
         document.documentElement.style.setProperty('--text-secondary', '#8B949E');
@@ -263,6 +247,7 @@
         localStorage.setItem('theme', 'dark');
         toggle.textContent = '🌙 / ☀️';
       } else {
+        // Switch to light
         document.documentElement.style.setProperty('--bg', '#FFFFFF');
         document.documentElement.style.setProperty('--text', '#1F2328');
         document.documentElement.style.setProperty('--text-secondary', '#5A646E');
