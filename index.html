@@ -11,24 +11,39 @@
       --text: #C9D1D9;
       --text-secondary: #8B949E;
       --accent: #58A6FF;
-      --border-radius: 12px;
+      --card-bg: #161B22;
+      --border: #30363D;
+      --button-bg: #1A7F37;
+      --button-hover: #238F44;
     }
+
+    /* Light Theme */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #FFFFFF;
+        --text: #1F2328;
+        --text-secondary: #5A646E;
+        --card-bg: #F6F8FA;
+        --border: #D0D7DE;
+        --button-bg: #1A7F37;
+        --button-hover: #166B2F;
+      }
+    }
+
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
     .container {
       width: 90%;
       max-width: 900px;
       margin: 60px auto;
       padding: 40px;
-      border-radius: var(--border-radius);
+      border-radius: 12px;
     }
     header {
       text-align: center;
@@ -59,6 +74,72 @@
       margin: 20px 0 30px;
       line-height: 1.6;
     }
+
+    /* Projects */
+    .projects {
+      margin: 50px 0;
+    }
+    .projects h2 {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      color: var(--text);
+    }
+    .project-card {
+      background: var(--card-bg);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .project-card h3 {
+      margin: 0 0 8px 0;
+      color: var(--accent);
+    }
+    .project-card p {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .tech {
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      color: #8B949E;
+      margin-top: 8px;
+    }
+
+    /* Hire Me Button */
+    .cta {
+      text-align: center;
+      margin: 40px 0;
+    }
+    .btn {
+      background: var(--button-bg);
+      color: white;
+      padding: 12px 28px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: var(--button-hover);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    /* Links */
     .links {
       display: flex;
       justify-content: center;
@@ -84,30 +165,98 @@
   </style>
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle">🌙 / ☀️</button>
+
   <div class="container">
     <header>
       <h1>Dmitrii</h1>
       <div class="username">&lt;dizel0110&gt;</div>
     </header>
 
-    <img src="https://gist.githubusercontent.com/dizel0110/your-gist-id/raw/banner.svg" alt="Tech Banner" class="banner" />
+    <!-- Ваш баннер -->
+    <img src="https://gist.githubusercontent.com/dizel0110/46d3ae8cabf2724687a6ce6a6a16ad29/raw/3be35bc55ac567836f3ef6ae6bb8a28322cc1d22/banner.svg" alt="Tech Banner" class="banner" />
 
     <p class="bio">
       Building AI agents that think, RAG systems that know, and pipelines that scale.<br>
       ML Engineer. Python-powered. Advocate for local LLMs and open AI.
     </p>
 
+    <!-- Projects -->
+    <div class="projects">
+      <h2>🚀 Projects</h2>
+      <div class="project-card">
+        <h3>Autonomous Agent Team</h3>
+        <p>Multi-agent system using CrewAI + LangGraph for automated data analysis and reporting.</p>
+        <div class="tech">Python • LangChain • GCP • ChromaDB</div>
+      </div>
+      <div class="project-card">
+        <h3>Local RAG Assistant</h3>
+        <p>Privacy-first chatbot with document retrieval using Ollama, Llama 3, and FastAPI.</p>
+        <div class="tech">Ollama • LangChain • FastAPI • React</div>
+      </div>
+      <div class="project-card">
+        <h3>ML Pipeline Orchestration</h3>
+        <p>Scalable training and inference pipeline with MLflow, RabbitMQ, and Django.</p>
+        <div class="tech">PyTorch • MLflow • RabbitMQ • Docker</div>
+      </div>
+    </div>
+
+    <!-- Hire Me Button -->
+    <div class="cta">
+      <a href="https://t.me/dizel0110" target="_blank" class="btn">Hire Me</a>
+    </div>
+
+    <!-- Links -->
     <div class="links">
       <a href="https://github.com/dizel0110" target="_blank">GitHub</a>
       <a href="https://www.linkedin.com/in/dizel0110/" target="_blank">LinkedIn</a>
-      <a href="https://hh.ru/resume/f956944fff0ee7c3eb0039ed1f763773435052" target="_blank">Resume (HH)</a>
+      <a href="https://hh.ru/resume/f956944fff0ee7c3eb0039ed1f763773435052" target="_blank">Resume</a>
       <a href="https://t.me/dizel0110" target="_blank">Telegram</a>
-      <a href="https://career.habr.com/dizel0110" target="_blank">Habr Career</a>
     </div>
 
     <footer>
       🌐 Hosted on GitHub Pages | 💻 100% open & free
     </footer>
   </div>
+
+  <script>
+    // Theme toggle
+    const toggle = document.getElementById('themeToggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Check saved preference
+    const currentTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+    if (currentTheme === 'light') {
+      document.documentElement.style.setProperty('--bg', '#FFFFFF');
+      document.documentElement.style.setProperty('--text', '#1F2328');
+      document.documentElement.style.setProperty('--text-secondary', '#5A646E');
+      document.documentElement.style.setProperty('--card-bg', '#F6F8FA');
+      document.documentElement.style.setProperty('--border', '#D0D7DE');
+      toggle.textContent = '☀️ / 🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      const isLight = document.documentElement.style.getPropertyValue('--bg') === '#FFFFFF';
+      if (isLight) {
+        // Switch to dark
+        document.documentElement.style.setProperty('--bg', '#0D1117');
+        document.documentElement.style.setProperty('--text', '#C9D1D9');
+        document.documentElement.style.setProperty('--text-secondary', '#8B949E');
+        document.documentElement.style.setProperty('--card-bg', '#161B22');
+        document.documentElement.style.setProperty('--border', '#30363D');
+        localStorage.setItem('theme', 'dark');
+        toggle.textContent = '🌙 / ☀️';
+      } else {
+        // Switch to light
+        document.documentElement.style.setProperty('--bg', '#FFFFFF');
+        document.documentElement.style.setProperty('--text', '#1F2328');
+        document.documentElement.style.setProperty('--text-secondary', '#5A646E');
+        document.documentElement.style.setProperty('--card-bg', '#F6F8FA');
+        document.documentElement.style.setProperty('--border', '#D0D7DE');
+        localStorage.setItem('theme', 'light');
+        toggle.textContent = '☀️ / 🌙';
+      }
+    });
+  </script>
 </body>
 </html>
