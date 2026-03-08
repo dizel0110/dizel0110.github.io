@@ -96,18 +96,18 @@ function Footer() {
           >
             GitHub
           </a>
-          <a 
-            href="https://www.instagram.com/beachmonkeyz/"
+          <a
+            href="https://www.instagram.com/dizel0110/"
             target="_blank"
             rel="noopener noreferrer"
             className="mono-text"
-            style={{ 
-              color: '#64748b',
+            style={{
+              color: '#94a3b8',
               textDecoration: 'none',
               transition: 'color 0.3s',
             }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#94a3b8'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#64748b'}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-cyan)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}
           >
             Instagram
           </a>
