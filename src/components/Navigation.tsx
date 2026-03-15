@@ -6,6 +6,7 @@ const navItems = [
   { label: 'Work', href: '#technical-core' },
   { label: 'Lifestyle', href: '#lifestyle' },
   { label: 'Investors', href: '#investors' },
+  { label: 'Pitch Me', href: '#footer' },
 ];
 
 export default function Navigation() {

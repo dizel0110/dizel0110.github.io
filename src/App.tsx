@@ -1,3 +1,4 @@
+﻿import VafeChatWidget from './components/VafeChatWidget';
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Lenis from 'lenis';
@@ -39,6 +40,7 @@ function App() {
         <Lifestyle />
         <InvestorGateway />
       </main>
+      <VafeChatWidget />
       <Footer />
     </div>
   );
@@ -52,7 +54,7 @@ function FilmGrain() {
 // Footer Component
 function Footer() {
   return (
-    <footer className="glass-card" style={{
+    <footer id="footer" className="glass-card" style={{
       margin: 'clamp(2rem, 4vw, 4rem)',
       padding: 'clamp(1.5rem, 3vw, 2.5rem)',
       textAlign: 'center',

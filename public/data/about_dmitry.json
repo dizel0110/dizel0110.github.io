@@ -1,0 +1,192 @@
+{
+  "project": "About Dmitry Knowledge Base",
+  "version": "1.1.0",
+  "person": {
+    "name": "Дмитрий Зеленин",
+    "nickname": "dizel0110",
+    "role": "LLM & ML Engineer",
+    "tagline": "Architecting LLMs. Mastering the Wind.",
+    "location": "El Gouna, Egypt",
+    "wind_days": "270+ windy days per year"
+  },
+  "knowledge_base": [
+    {
+      "id": 1,
+      "tag": "About",
+      "concept": "Основная деятельность",
+      "description": "LLM & ML Engineer, специализация на AI-агентах и RAG-системах",
+      "details": "Разработка полномасштабных AI-решений: от прототипа до продакшена. Превращаю сложные задачи в работающие продукты"
+    },
+    {
+      "id": 2,
+      "tag": "Skills",
+      "concept": "Технические навыки",
+      "description": "Python, PyTorch, Transformers, FastAPI, React",
+      "details": "Полный стек ML: data preparation → training → deployment → monitoring. Уверенно чувствую себя на всех этапах"
+    },
+    {
+      "id": 3,
+      "tag": "Skills",
+      "concept": "LLM & RAG",
+      "description": "Fine-tuning (LoRA, QLoRA), RAG-архитектуры, агенты",
+      "details": "Опыт с Llama, Qwen, Gemini. Построение production RAG-пайплайнов. RAPTOR-индексация для сложных документов"
+    },
+    {
+      "id": 4,
+      "tag": "Skills",
+      "concept": "MLOps",
+      "description": "MLflow, DVC, Docker, CI/CD, Ray",
+      "details": "Автоматизация ML-пайплайнов, версионирование, мониторинг. Знаю как доставить модель в продакшен"
+    },
+    {
+      "id": 5,
+      "tag": "Skills",
+      "concept": "Computer Vision",
+      "description": "OpenCV, YOLO, Segmentation, Classification",
+      "details": "Опыт работы с детекцией объектов, сегментацией, классификацией изображений. Медицинские и промышленные кейсы"
+    },
+    {
+      "id": 6,
+      "tag": "Skills",
+      "concept": "Data Engineering",
+      "description": "SQL, Pandas, PySpark, ETL-пайплайны",
+      "details": "Построение надёжных пайплайнов данных. Работа с большими объёмами информации"
+    },
+    {
+      "id": 7,
+      "tag": "Project",
+      "concept": "V-AFE",
+      "description": "AI инструктор по кайтбордингу с RAG-архитектурой",
+      "details": "34 концепта, RAPTOR-индекс, интеграция в GitHub Pages. Личный проект на стыке хобби и профессии"
+    },
+    {
+      "id": 8,
+      "tag": "Project",
+      "concept": "AI PROPHET",
+      "description": "Мультимодальный AI-агент (Text + Vision + Voice)",
+      "details": "Fallback-система: Google Gemini → HuggingFace (Qwen/Llama) для 99.9% uptime. Универсальный ассистент"
+    },
+    {
+      "id": 9,
+      "tag": "Project",
+      "concept": "NEWS-RECOMMENDER",
+      "description": "Production MLOps пайплайн для рекомендаций новостей",
+      "details": "MLflow, DVC, Ray, LaBSE embeddings. Персонализация контента на основе предпочтений"
+    },
+    {
+      "id": 10,
+      "tag": "Project",
+      "concept": "ITMO MedTech",
+      "description": "Computer Vision сервис для медицины",
+      "details": "FastAPI + CV + Telegram Bot с очередью сообщений. Анализ медицинских изображений"
+    },
+    {
+      "id": 11,
+      "tag": "Project",
+      "concept": "Portfolio Site",
+      "description": "React + TypeScript + Vite портфолио",
+      "details": "Современный стек, анимации Framer Motion, чат-виджет с RAG. Деплой на GitHub Pages"
+    },
+    {
+      "id": 12,
+      "tag": "Education",
+      "concept": "HARDML",
+      "description": "Хардкорный ML курс (завершён в августе 2022)",
+      "details": "Глубокое погружение в ML/DL теорию и практику. Математика, алгоритмы, нейросети"
+    },
+    {
+      "id": 13,
+      "tag": "Education",
+      "concept": "ITMO University",
+      "description": "ML Engineering проекты в ИТМО",
+      "details": "Прикладные задачи ML в индустрии. Реальные кейсы от партнёров университета"
+    },
+    {
+      "id": 14,
+      "tag": "Education",
+      "concept": "Самообразование",
+      "description": "Постоянное изучение нового в ML/AI",
+      "details": "Слежу за последними исследованиями, читаю papers, экспериментирую с новыми моделями"
+    },
+    {
+      "id": 15,
+      "tag": "Contact",
+      "concept": "Email",
+      "description": "dizel0110@gmail.com",
+      "details": "Основной способ связи. Отвечаю в течение 24 часов"
+    },
+    {
+      "id": 16,
+      "tag": "Contact",
+      "concept": "GitHub",
+      "description": "https://github.com/dizel0110",
+      "details": "62+ репозитория, включая V-AFE и AI PROPHET. Открытый код и проекты"
+    },
+    {
+      "id": 17,
+      "tag": "Contact",
+      "concept": "Telegram",
+      "description": "@dizel0110",
+      "details": "Быстрый ответ в мессенджере. Предпочтительный способ связи"
+    },
+    {
+      "id": 18,
+      "tag": "Contact",
+      "concept": "LinkedIn",
+      "description": "https://linkedin.com/in/dizel0110",
+      "details": "Профессиональная сеть. Рекомендации и опыт работы"
+    },
+    {
+      "id": 19,
+      "tag": "Contact",
+      "concept": "Instagram",
+      "description": "https://instagram.com/dizel0110",
+      "details": "Кайтинг и жизнь в El Gouna. Лайфстайл и хобби"
+    },
+    {
+      "id": 20,
+      "tag": "Philosophy",
+      "concept": "Подход к работе",
+      "description": "От тактильного опыта к цифровой системе",
+      "details": "Превращаю физический опыт в инженерные решения (как V-AFE для кайтинга). Понимаю предметную область изнутри"
+    },
+    {
+      "id": 21,
+      "tag": "Philosophy",
+      "concept": "Локация",
+      "description": "El Gouna, Egypt — 270+ ветреных дней в году",
+      "details": "Идеальное место для кайтинга и удалённой работы. Работаю из любого часового пояса"
+    },
+    {
+      "id": 22,
+      "tag": "Availability",
+      "concept": "Поиск работы",
+      "description": "Data Scientist, ML-engineer, AI Agent Dev, Data Analyst",
+      "details": "Открыт к предложениям в области LLM & ML Engineering. Full-time, part-time, contract"
+    },
+    {
+      "id": 23,
+      "tag": "Availability",
+      "concept": "Формат работы",
+      "description": "Remote, Hybrid, Relocation",
+      "details": "Готов к удалённой работе, гибриду или переезду. Гибкий график"
+    },
+    {
+      "id": 24,
+      "tag": "Languages",
+      "concept": "Языки",
+      "description": "Русский (native), English (B1-B2)",
+      "details": "Свободно читаю документацию и papers на английском. Работаю в международных командах"
+    }
+  ],
+  "suggestions": [
+    "Расскажи о себе",
+    "Какие проекты у тебя есть?",
+    "Как с тобой связаться?",
+    "Где ты находишься?",
+    "Какие у тебя навыки?",
+    "Открыт к работе?",
+    "Какой опыт образования?",
+    "На каком формате работы открыт?"
+  ]
+}

@@ -32,6 +32,7 @@ export default function Hero() {
 
   return (
     <section
+      id="hero"
       ref={containerRef}
       style={{
         minHeight: '100vh',
