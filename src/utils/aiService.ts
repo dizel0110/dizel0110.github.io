@@ -31,11 +31,9 @@ const VAFE_API_URL = 'https://vafe-api.vercel.app/api/v1/chat';
 
 /**
  * Вызов V-AFE API (Gemini через Vercel)
- *
- * Примечание: Если возникают CORS ошибки, нужно добавить CORS заголовки
- * в vafe-api или использовать Vercel Edge Middleware для CORS.
+ * Возвращает ответ + источники из Tavily
  */
-async function callVafeApi(message: string, mode: 'vafe' | 'about' | 'general'): Promise<string> {
+async function callVafeApi(message: string, mode: 'vafe' | 'about' | 'general'): Promise<{ text: string, sources: Array<{ title: string; url: string; snippet: string }> }> {
   try {
     console.log('[V-AFE API] Вызов API:', { message, mode });
 
@@ -47,7 +45,7 @@ async function callVafeApi(message: string, mode: 'vafe' | 'about' | 'general'):
       body: JSON.stringify({
         message,
         mode,
-        use_rag: mode !== 'general'
+        use_rag: mode !== 'general'  // Для general используем web search
       }),
     });
 
@@ -60,11 +58,11 @@ async function callVafeApi(message: string, mode: 'vafe' | 'about' | 'general'):
     const data = await response.json();
     console.log('[V-AFE API] Response:', data);
 
-    // V-AFE API возвращает ответ в поле 'answer'
-    const result = data.answer || data.response || data.message || 'No response from API';
-    console.log('[V-AFE API] Result:', result);
-
-    return result;
+    // Возвращаем ответ + источники
+    return {
+      text: data.answer || data.response || data.message || 'No response from API',
+      sources: data.sources || []
+    };
   } catch (error) {
     console.error('[V-AFE API] Error:', error);
     // Пробрасываем ошибку для fallback
@@ -367,11 +365,18 @@ export async function generateAIResponse(
     const apiResponse = await callVafeApi(query, 'general');
     console.log('[generateAIResponse] Получен ответ от API:', apiResponse);
 
-    // Источники будут возвращены из API (если API поддерживает)
-    // Пока используем дефолтный источник
+    // Преобразуем источники из API в формат виджета
+    const sources = (apiResponse.sources || []).map(s => ({
+      id: 0,
+      tag: 'Web',
+      concept: s.title,
+      url: s.url,
+      details: s.snippet
+    }));
+
     return {
-      text: apiResponse,
-      sources: [],
+      text: apiResponse.text,
+      sources: sources,
       searchQuery: query
     };
   } catch (error) {
