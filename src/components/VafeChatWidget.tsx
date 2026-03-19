@@ -5,12 +5,14 @@ import { generateAIResponse } from '../utils/aiService';
 // === ТИПЫ ===
 type ChatMode = 'vafe' | 'about' | 'general';
 type Language = 'en' | 'ru';
+type SearchProvider = 'duckduckgo' | 'tavily' | 'huggingface' | 'none';
 
 // === RATE LIMITER ===
 const RATE_LIMIT_KEYS = {
   GLOBAL: 'vafe-global-month',
   USER: 'vafe-user-day',
-  LAST_CHECK: 'vafe-last-check'
+  LAST_CHECK: 'vafe-last-check',
+  TAVILY_PERIOD: 'vafe-tavily-period'  // Период биллинга Tavily
 }
 
 const LIMITS = {
@@ -18,6 +20,44 @@ const LIMITS = {
   DAILY_PER_USER: 30,
   WARNING_AT: 800,
   CRITICAL_AT: 950
+}
+
+// === ПОИСКОВИКИ ===
+const SEARCH_PROVIDERS: Record<SearchProvider, {
+  name: string
+  icon: string
+  limit: number
+  description: string
+  requiresApiKey: boolean
+}> = {
+  duckduckgo: {
+    name: 'DuckDuckGo',
+    icon: '🦆',
+    limit: 10000,  // Очень много, почти безлимит
+    description: 'Бесплатно, без API ключа',
+    requiresApiKey: false
+  },
+  tavily: {
+    name: 'Tavily AI',
+    icon: '⚡',
+    limit: 1000,  // Free tier
+    description: '1000 запросов/мес',
+    requiresApiKey: true
+  },
+  huggingface: {
+    name: 'HuggingFace',
+    icon: '🤗',
+    limit: 10000,
+    description: 'Бесплатно, медленно',
+    requiresApiKey: false
+  },
+  none: {
+    name: 'Без поиска',
+    icon: '🔒',
+    limit: 0,
+    description: 'Только локальная база',
+    requiresApiKey: false
+  }
 }
 
 interface RateLimitResult {
@@ -554,6 +594,7 @@ export default function VafeChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState<ChatMode>('general');
   const [language, setLanguage] = useState<Language>('en');
+  const [searchProvider, setSearchProvider] = useState<SearchProvider>('duckduckgo');  // ← Переключатель поисковика
   const [usedSuggestions, setUsedSuggestions] = useState<Set<string>>(new Set());
 
   // РАЗДЕЛЬНАЯ ПАМЯТЬ ДЛЯ КАЖДОГО РЕЖИМА И ЯЗЫКА
@@ -1112,6 +1153,59 @@ export default function VafeChatWidget() {
             >
               {language === 'en' ? '🇷🇺 RU' : '🇬🇧 EN'}
             </button>
+          </div>
+
+          {/* Переключатель поисковика */}
+          <div className="vafe-search-switcher" style={{
+            padding: '8px 12px',
+            background: 'rgba(0,0,0,0.3)',
+            borderTop: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <div style={{
+              display: 'flex',
+              gap: '6px',
+              justifyContent: 'center',
+              flexWrap: 'wrap'
+            }}>
+              {(Object.keys(SEARCH_PROVIDERS) as SearchProvider[]).map(provider => {
+                const config = SEARCH_PROVIDERS[provider];
+                const isActive = searchProvider === provider;
+                return (
+                  <button
+                    key={provider}
+                    onClick={() => setSearchProvider(provider)}
+                    title={`${config.name} — ${config.description}`}
+                    style={{
+                      padding: '4px 8px',
+                      fontSize: '11px',
+                      background: isActive ? config.icon === '⚡' ? '#e11d48' : '#0ea5e9' : 'transparent',
+                      color: isActive ? 'white' : '#94a3b8',
+                      border: `1px solid ${isActive ? 'transparent' : '#475569'}`,
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    <span>{config.icon}</span>
+                    <span style={{ display: window.innerWidth < 768 ? 'none' : 'inline' }}>{config.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <p style={{
+              fontSize: '10px',
+              color: '#64748b',
+              textAlign: 'center',
+              marginTop: '4px'
+            }}>
+              {SEARCH_PROVIDERS[searchProvider].description}
+              {searchProvider === 'tavily' && (
+                <span> • 📊 {rateLimitStats ? `${rateLimitStats.percentageUsed}% использовано` : 'Загрузка...'}</span>
+              )}
+            </p>
           </div>
 
           <div className="vafe-chat-messages">
