@@ -747,7 +747,8 @@ export default function VafeChatWidget() {
 
       // === РЕЖИМ "GENERAL" — СРАЗУ ИДЁМ В V-AFE API ===
       if (mode === 'general') {
-        const aiResponse = await generateAIResponse(query, '', 'general');
+        // Передаём searchProvider в AI сервис
+        const aiResponse = await generateAIResponse(query, '', 'general', searchProvider);
 
         const assistantMsg: Message = {
           role: 'assistant',

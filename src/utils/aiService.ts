@@ -33,9 +33,13 @@ const VAFE_API_URL = 'https://vafe-api.vercel.app/api/v1/chat';
  * Вызов V-AFE API (Gemini через Vercel)
  * Возвращает ответ + источники из Tavily
  */
-async function callVafeApi(message: string, mode: 'vafe' | 'about' | 'general'): Promise<{ text: string, sources: Array<{ title: string; url: string; snippet: string }> }> {
+async function callVafeApi(
+  message: string,
+  mode: 'vafe' | 'about' | 'general',
+  searchProvider: 'duckduckgo' | 'tavily' | 'huggingface' | 'hybrid' | 'concepts' = 'hybrid'
+): Promise<{ text: string, sources: Array<{ title: string; url: string; snippet: string }> }> {
   try {
-    console.log('[V-AFE API] Вызов API:', { message, mode });
+    console.log('[V-AFE API] Вызов API:', { message, mode, searchProvider });
 
     const response = await fetch(VAFE_API_URL, {
       method: 'POST',
@@ -45,7 +49,8 @@ async function callVafeApi(message: string, mode: 'vafe' | 'about' | 'general'):
       body: JSON.stringify({
         message,
         mode,
-        use_rag: mode !== 'general'  // Для general используем web search
+        search_provider: searchProvider,  // ← Передаём поисковик
+        use_rag: mode !== 'general' || searchProvider === 'concepts' || searchProvider === 'hybrid'
       }),
     });
 
@@ -332,7 +337,8 @@ function generateFallbackResponse(query: string, searchResults?: Array<{ title: 
 export async function generateAIResponse(
   query: string,
   _knowledgeContext: string,
-  mode: 'vafe' | 'about' | 'general' = 'general'
+  mode: 'vafe' | 'about' | 'general' = 'general',
+  searchProvider: 'duckduckgo' | 'tavily' | 'huggingface' | 'hybrid' | 'concepts' = 'hybrid'
 ): Promise<AIResponse> {
   const q = query.toLowerCase();
   const lang = detectLanguage(query);
@@ -361,8 +367,8 @@ export async function generateAIResponse(
 
   // === Режим "general" — сначала пробуем V-AFE API ===
   try {
-    console.log('[generateAIResponse] Вызов V-AFE API...');
-    const apiResponse = await callVafeApi(query, 'general');
+    console.log('[generateAIResponse] Вызов V-AFE API...', { searchProvider });
+    const apiResponse = await callVafeApi(query, 'general', searchProvider);
     console.log('[generateAIResponse] Получен ответ от API:', apiResponse);
 
     // Преобразуем источники из API в формат виджета
