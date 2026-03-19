@@ -525,11 +525,36 @@ export default function VafeChatWidget() {
     setIsTyping(true);
 
     try {
-      // Сначала ищем в локальной базе для любого режима
+      const q = query.toLowerCase();
+
+      // === РЕЖИМ "GENERAL" — СРАЗУ ИДЁМ В V-AFE API ===
+      if (mode === 'general') {
+        const aiResponse = await generateAIResponse(query, '', 'general');
+
+        const assistantMsg: Message = {
+          role: 'assistant',
+          content: aiResponse.text,
+          sources: (aiResponse.sources || []) as Concept[],
+          timestamp: Date.now(),
+          mode
+        };
+
+        setMessagesByModeAndLang(prev => ({
+          ...prev,
+          [mode]: {
+            ...prev[mode],
+            [language]: [...prev[mode][language], assistantMsg]
+          }
+        }));
+        setIsTyping(false);
+        return;
+      }
+
+      // === РЕЖИМЫ "VAFE" и "ABOUT" — ЛОКАЛЬНАЯ БАЗА ===
+      // Сначала ищем в локальной базе
       const localResults = searchKnowledge(query, currentKnowledgeBase);
 
       // Специальные кейсы для шаблонных вопросов в режиме about
-      const q = query.toLowerCase();
 
       // "Где находишься?" → Локация / Location
       if ((q.includes('где') || q.includes('находиш') || q.includes('жив') || q.includes('location') || q.includes('where')) && mode === 'about') {
@@ -728,7 +753,7 @@ export default function VafeChatWidget() {
       }
 
       // Если есть хорошие совпадения — используем локальную базу (порог 8 вместо 10)
-      if (localResults.length > 0 && (localResults[0].score ?? 0) >= 8 && mode !== 'general') {
+      if (localResults.length > 0 && (localResults[0].score ?? 0) >= 8) {
         // Для vafe и about используем локальную базу
         const response = generateResponse(query, localResults, mode, language);
 
@@ -753,7 +778,8 @@ export default function VafeChatWidget() {
           .map(r => `${r.concept}: ${r.description || r.physics || r.mechanics || ''}`)
           .join('\n');
 
-        const aiResponse = await generateAIResponse(query, knowledgeContext);
+        // Передаём режим в generateAIResponse для правильного роутинга
+        const aiResponse = await generateAIResponse(query, knowledgeContext, mode);
 
         const assistantMsg: Message = {
           role: 'assistant',

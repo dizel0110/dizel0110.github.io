@@ -15,15 +15,61 @@ function detectLanguage(query: string): 'en' | 'ru' {
 }
 
 /**
- * Легковесный AI-сервис для общего чата
- * Использует бесплатные API для поиска в интернете
- * Режим "О себе" работает ТОЛЬКО по локальной базе
+ * AI-сервис для общего чата
+ * Использует V-AFE API (Vercel + Gemini) для режима "general"
+ * Режим "О себе" и "Кайтинг" работают ТОЛЬКО по локальной базе
  */
 
 export interface AIResponse {
   text: string;
   sources?: Array<{ id?: number; tag?: string; concept: string; url?: string; details?: string }>;
   searchQuery?: string;
+}
+
+// === V-AFE API CONFIGURATION ===
+const VAFE_API_URL = 'https://vafe-api.vercel.app/api/v1/chat';
+
+/**
+ * Вызов V-AFE API (Gemini через Vercel)
+ *
+ * Примечание: Если возникают CORS ошибки, нужно добавить CORS заголовки
+ * в vafe-api или использовать Vercel Edge Middleware для CORS.
+ */
+async function callVafeApi(message: string, mode: 'vafe' | 'about' | 'general'): Promise<string> {
+  try {
+    console.log('[V-AFE API] Вызов API:', { message, mode });
+
+    const response = await fetch(VAFE_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message,
+        mode,
+        use_rag: mode !== 'general'
+      }),
+    });
+
+    console.log('[V-AFE API] Status:', response.status);
+
+    if (!response.ok) {
+      throw new Error(`V-AFE API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('[V-AFE API] Response:', data);
+
+    // V-AFE API возвращает ответ в поле 'answer'
+    const result = data.answer || data.response || data.message || 'No response from API';
+    console.log('[V-AFE API] Result:', result);
+
+    return result;
+  } catch (error) {
+    console.error('[V-AFE API] Error:', error);
+    // Пробрасываем ошибку для fallback
+    throw error;
+  }
 }
 
 /**
@@ -280,13 +326,55 @@ function generateFallbackResponse(query: string, searchResults?: Array<{ title: 
 /**
  * Основная функция для генерации AI-ответа в ОБЩЕМ режиме
  * НЕ используется в режимах "vafe" и "about"
+ *
+ * Приоритет:
+ * 1. V-AFE API (Gemini через Vercel) — для общих вопросов
+ * 2. Fallback: DuckDuckGo + Wikipedia + HuggingFace
  */
 export async function generateAIResponse(
   query: string,
-  _knowledgeContext: string
+  _knowledgeContext: string,
+  mode: 'vafe' | 'about' | 'general' = 'general'
 ): Promise<AIResponse> {
   const q = query.toLowerCase();
   const lang = detectLanguage(query);
+
+  console.log('[generateAIResponse] Вызов:', { query, mode, lang });
+
+  // === Для режимов "vafe" и "about" — перенаправляем на локальную базу ===
+  // Эти режимы должны обрабатываться в VafeChatWidget.tsx
+  if (mode === 'vafe') {
+    return {
+      text: lang === 'en'
+        ? 'For kitesurfing questions, use **"Kiting"** mode (🪁). Local knowledge base with 34 concepts.'
+        : 'Для вопросов о кайтбординге используйте режим **"Кайтинг"** (🪁). Локальная база из 34 концептов.',
+      sources: [{ id: 0, tag: 'Info', concept: lang === 'en' ? 'Use Kiting Mode' : 'Используйте режим Кайтинг' }]
+    };
+  }
+
+  if (mode === 'about') {
+    return {
+      text: lang === 'en'
+        ? 'For portfolio questions, use **"Projects"** mode (👤). Local knowledge base with 24 concepts.'
+        : 'Для вопросов о портфолио используйте режим **"Проекты"** (👤). Локальная база из 24 концептов.',
+      sources: [{ id: 0, tag: 'Info', concept: lang === 'en' ? 'Use Projects Mode' : 'Используйте режим Проекты' }]
+    };
+  }
+
+  // === Режим "general" — сначала пробуем V-AFE API ===
+  try {
+    console.log('[generateAIResponse] Вызов V-AFE API...');
+    const apiResponse = await callVafeApi(query, 'general');
+    console.log('[generateAIResponse] Получен ответ от API:', apiResponse);
+    return {
+      text: apiResponse,
+      sources: [{ id: 0, tag: 'V-AFE API', concept: 'Gemini via Vercel' }],
+      searchQuery: query
+    };
+  } catch (error) {
+    console.warn('[generateAIResponse] V-AFE API недоступен, используем fallback:', error);
+    // Fallback на старый механизм с поиском
+  }
 
   // === "Расскажи о проектах" — возвращаем проекты с описаниями ===
   const projectKeywords = ['расскажи о проект', 'tell about project', 'what project', 'какие проект', 'твои проект', 'your project'];

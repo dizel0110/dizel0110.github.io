@@ -24,6 +24,9 @@ assets/
 *.sln
 *.sw?
 
+# Internal docs, chats, and ad-hoc scripts
+.internal/
+
 # Python
 .venv/
 venv/
