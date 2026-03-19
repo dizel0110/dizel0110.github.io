@@ -5,7 +5,7 @@ import { generateAIResponse } from '../utils/aiService';
 // === ТИПЫ ===
 type ChatMode = 'vafe' | 'about' | 'general';
 type Language = 'en' | 'ru';
-type SearchProvider = 'duckduckgo' | 'tavily' | 'huggingface' | 'none';
+type SearchProvider = 'duckduckgo' | 'tavily' | 'huggingface' | 'hybrid' | 'concepts';
 
 // === RATE LIMITER ===
 const RATE_LIMIT_KEYS = {
@@ -29,34 +29,47 @@ const SEARCH_PROVIDERS: Record<SearchProvider, {
   limit: number
   description: string
   requiresApiKey: boolean
+  searchType: 'web' | 'local' | 'hybrid'
 }> = {
   duckduckgo: {
     name: 'DuckDuckGo',
     icon: '🦆',
     limit: 10000,  // Очень много, почти безлимит
     description: 'Бесплатно, без API ключа',
-    requiresApiKey: false
+    requiresApiKey: false,
+    searchType: 'web'
   },
   tavily: {
     name: 'Tavily AI',
     icon: '⚡',
     limit: 1000,  // Free tier
     description: '1000 запросов/мес',
-    requiresApiKey: true
+    requiresApiKey: true,
+    searchType: 'web'
   },
   huggingface: {
     name: 'HuggingFace',
     icon: '🤗',
     limit: 10000,
     description: 'Бесплатно, медленно',
-    requiresApiKey: false
+    requiresApiKey: false,
+    searchType: 'web'
   },
-  none: {
-    name: 'Без поиска',
-    icon: '🔒',
-    limit: 0,
-    description: 'Только локальная база',
-    requiresApiKey: false
+  hybrid: {
+    name: 'Гибридный',
+    icon: '🔀',
+    limit: 1000,  // Лимит по веб-части
+    description: 'Концепты + Веб-поиск',
+    requiresApiKey: false,
+    searchType: 'hybrid'
+  },
+  concepts: {
+    name: 'Концепты',
+    icon: '📚',
+    limit: 0,  // Безлимитно
+    description: 'Только локальная база (34/24 концепта)',
+    requiresApiKey: false,
+    searchType: 'local'
   }
 }
 
@@ -594,7 +607,7 @@ export default function VafeChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState<ChatMode>('general');
   const [language, setLanguage] = useState<Language>('en');
-  const [searchProvider, setSearchProvider] = useState<SearchProvider>('duckduckgo');  // ← Переключатель поисковика
+  const [searchProvider, setSearchProvider] = useState<SearchProvider>('hybrid');  // ← Гибридный по умолчанию
   const [usedSuggestions, setUsedSuggestions] = useState<Set<string>>(new Set());
 
   // РАЗДЕЛЬНАЯ ПАМЯТЬ ДЛЯ КАЖДОГО РЕЖИМА И ЯЗЫКА
