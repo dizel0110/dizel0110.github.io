@@ -1147,80 +1147,106 @@ export default function VafeChatWidget() {
             </div>
           </div>
 
-          {/* Переключатель режимов */}
-          <div className="vafe-mode-switcher">
+          {/* Переключатель режимов — компактный */}
+          <div style={{
+            display: 'flex',
+            gap: '6px',
+            padding: '8px 12px',
+            background: '#f8faff'
+          }}>
             {(['vafe', 'about', 'general'] as ChatMode[]).map(m => (
               <button
                 key={m}
-                className={`vafe-mode-btn ${mode === m ? 'active' : ''}`}
                 onClick={() => setMode(m)}
                 title={t.modes[m]}
+                style={{
+                  flex: 1,
+                  padding: '6px',
+                  border: '2px solid',
+                  borderColor: mode === m ? MODES[m].color : '#e0e8f0',
+                  background: mode === m ? MODES[m].gradient : 'white',
+                  color: mode === m ? 'white' : MODES[m].color,
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '18px',
+                  transition: 'all 0.2s'
+                }}
               >
                 {MODES[m].icon}
               </button>
             ))}
+          </div>
+
+          {/* Переключатель языка и поисковика — компактный */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '8px 12px',
+            background: 'rgba(0,0,0,0.2)',
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            gap: '8px'
+          }}>
             {/* Переключатель языка */}
             <button
               className="vafe-lang-btn"
               onClick={() => setLanguage(language === 'en' ? 'ru' : 'en')}
               title={`Switch to ${language === 'en' ? 'Russian' : 'English'}`}
+              style={{
+                padding: '6px 10px',
+                fontSize: '12px',
+                background: 'transparent',
+                border: '1px solid #475569',
+                borderRadius: '6px',
+                color: '#94a3b8',
+                cursor: 'pointer'
+              }}
             >
               {language === 'en' ? '🇷🇺 RU' : '🇬🇧 EN'}
             </button>
+
+            {/* Переключатель поисковика — Select */}
+            <select
+              value={searchProvider}
+              onChange={(e) => setSearchProvider(e.target.value as SearchProvider)}
+              title={SEARCH_PROVIDERS[searchProvider].description}
+              style={{
+                padding: '6px 10px',
+                fontSize: '12px',
+                background: '#1e293b',
+                border: '1px solid #475569',
+                borderRadius: '6px',
+                color: '#e2e8f0',
+                cursor: 'pointer',
+                maxWidth: '140px',
+                outline: 'none'
+              }}
+            >
+              {(Object.keys(SEARCH_PROVIDERS) as SearchProvider[]).map(provider => (
+                <option key={provider} value={provider}>
+                  {SEARCH_PROVIDERS[provider].icon} {SEARCH_PROVIDERS[provider].name}
+                </option>
+              ))}
+            </select>
           </div>
 
-          {/* Переключатель поисковика */}
-          <div className="vafe-search-switcher" style={{
-            padding: '8px 12px',
-            background: 'rgba(0,0,0,0.3)',
-            borderTop: '1px solid rgba(255,255,255,0.1)'
-          }}>
+          {/* Статистика Tavily (если выбран) */}
+          {searchProvider === 'tavily' && rateLimitStats && (
             <div style={{
-              display: 'flex',
-              gap: '6px',
-              justifyContent: 'center',
-              flexWrap: 'wrap'
+              padding: '4px 12px',
+              background: 'rgba(225, 29, 72, 0.1)',
+              borderTop: '1px solid rgba(225, 29, 72, 0.2)',
+              textAlign: 'center'
             }}>
-              {(Object.keys(SEARCH_PROVIDERS) as SearchProvider[]).map(provider => {
-                const config = SEARCH_PROVIDERS[provider];
-                const isActive = searchProvider === provider;
-                return (
-                  <button
-                    key={provider}
-                    onClick={() => setSearchProvider(provider)}
-                    title={`${config.name} — ${config.description}`}
-                    style={{
-                      padding: '4px 8px',
-                      fontSize: '11px',
-                      background: isActive ? config.icon === '⚡' ? '#e11d48' : '#0ea5e9' : 'transparent',
-                      color: isActive ? 'white' : '#94a3b8',
-                      border: `1px solid ${isActive ? 'transparent' : '#475569'}`,
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    <span>{config.icon}</span>
-                    <span style={{ display: window.innerWidth < 768 ? 'none' : 'inline' }}>{config.name}</span>
-                  </button>
-                );
-              })}
+              <p style={{
+                fontSize: '10px',
+                color: '#f43f5e',
+                margin: 0
+              }}>
+                📊 Tavily: {rateLimitStats.percentageUsed}% использовано ({rateLimitStats.remaining} ост.)
+              </p>
             </div>
-            <p style={{
-              fontSize: '10px',
-              color: '#64748b',
-              textAlign: 'center',
-              marginTop: '4px'
-            }}>
-              {SEARCH_PROVIDERS[searchProvider].description}
-              {searchProvider === 'tavily' && (
-                <span> • 📊 {rateLimitStats ? `${rateLimitStats.percentageUsed}% использовано` : 'Загрузка...'}</span>
-              )}
-            </p>
-          </div>
+          )}
 
           <div className="vafe-chat-messages">
             {currentMessages.length === 0 && (
