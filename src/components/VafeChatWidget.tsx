@@ -6,6 +6,121 @@ import { generateAIResponse } from '../utils/aiService';
 type ChatMode = 'vafe' | 'about' | 'general';
 type Language = 'en' | 'ru';
 
+// === RATE LIMITER ===
+const RATE_LIMIT_KEYS = {
+  GLOBAL: 'vafe-global-month',
+  USER: 'vafe-user-day',
+  LAST_CHECK: 'vafe-last-check'
+}
+
+const LIMITS = {
+  MONTHLY: 1000,
+  DAILY_PER_USER: 30,
+  WARNING_AT: 800,
+  CRITICAL_AT: 950
+}
+
+interface RateLimitResult {
+  allowed: boolean
+  remaining: number
+  warning?: string
+  resetDate?: string
+}
+
+function getMonthKey(): string {
+  const now = new Date()
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+}
+
+function getDayKey(): string {
+  const now = new Date()
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+}
+
+function checkRateLimit(): RateLimitResult {
+  const monthKey = getMonthKey()
+  const dayKey = getDayKey()
+
+  const lastCheck = localStorage.getItem(RATE_LIMIT_KEYS.LAST_CHECK)
+  if (lastCheck !== monthKey) {
+    localStorage.setItem(RATE_LIMIT_KEYS.GLOBAL, '0')
+    localStorage.setItem(RATE_LIMIT_KEYS.LAST_CHECK, monthKey)
+  }
+
+  const globalCount = parseInt(localStorage.getItem(RATE_LIMIT_KEYS.GLOBAL) || '0')
+  const userKey = `${RATE_LIMIT_KEYS.USER}-${dayKey}`
+  const userCount = parseInt(localStorage.getItem(userKey) || '0')
+
+  const remainingMonthly = LIMITS.MONTHLY - globalCount
+  const remainingDaily = LIMITS.DAILY_PER_USER - userCount
+
+  if (globalCount >= LIMITS.MONTHLY) {
+    const nextMonth = new Date()
+    nextMonth.setMonth(nextMonth.getMonth() + 1)
+    nextMonth.setDate(1)
+
+    return {
+      allowed: false,
+      remaining: 0,
+      warning: `🔴 Лимит запросов исчерпан на этот месяц. Следующее обновление: ${nextMonth.toLocaleDateString('ru-RU')}`,
+      resetDate: nextMonth.toISOString()
+    }
+  }
+
+  if (userCount >= LIMITS.DAILY_PER_USER) {
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    tomorrow.setHours(0, 0, 0, 0)
+
+    return {
+      allowed: false,
+      remaining: 0,
+      warning: `⚠️ Вы исчерпали дневной лимит (${userCount}/${LIMITS.DAILY_PER_USER}). Попробуйте завтра.`,
+      resetDate: tomorrow.toISOString()
+    }
+  }
+
+  let warning: string | undefined
+
+  if (globalCount >= LIMITS.CRITICAL_AT) {
+    warning = `⚠️ Осталось ${remainingMonthly} запросов до конца месяца. Используйте экономно.`
+  } else if (globalCount >= LIMITS.WARNING_AT) {
+    warning = `ℹ️ Израсходовано ${Math.round((globalCount / LIMITS.MONTHLY) * 100)}% месячного лимита (${globalCount}/${LIMITS.MONTHLY})`
+  }
+
+  localStorage.setItem(RATE_LIMIT_KEYS.GLOBAL, String(globalCount + 1))
+  localStorage.setItem(userKey, String(userCount + 1))
+
+  return {
+    allowed: true,
+    remaining: Math.min(remainingDaily - 1, remainingMonthly - 1),
+    warning
+  }
+}
+
+function getRateLimitStats() {
+  const monthKey = getMonthKey()
+  const lastCheck = localStorage.getItem(RATE_LIMIT_KEYS.LAST_CHECK)
+
+  if (lastCheck !== monthKey) {
+    return {
+      month: monthKey,
+      totalRequests: 0,
+      percentageUsed: 0,
+      remaining: LIMITS.MONTHLY
+    }
+  }
+
+  const globalCount = parseInt(localStorage.getItem(RATE_LIMIT_KEYS.GLOBAL) || '0')
+
+  return {
+    month: monthKey,
+    totalRequests: globalCount,
+    percentageUsed: Math.round((globalCount / LIMITS.MONTHLY) * 100),
+    remaining: LIMITS.MONTHLY - globalCount
+  }
+}
+
 interface Concept {
   id: number;
   tag: string;
@@ -505,6 +620,32 @@ export default function VafeChatWidget() {
   const handleSend = async () => {
     if (!input.trim()) return;
 
+    // === ПРОВЕРКА ЛИМИТА ===
+    const rateLimit = checkRateLimit()
+
+    // Показываем предупреждение (даже если разрешено)
+    if (rateLimit.warning) {
+      const warningMessage: Message = {
+        role: 'assistant',
+        content: rateLimit.warning,
+        timestamp: Date.now(),
+        mode
+      }
+      setMessagesByModeAndLang(prev => ({
+        ...prev,
+        [mode]: {
+          ...prev[mode],
+          [language]: [...prev[mode][language], warningMessage]
+        }
+      }))
+
+      // Если не разрешено — останавливаемся
+      if (!rateLimit.allowed) {
+        setIsTyping(false)
+        return
+      }
+    }
+
     const userMsg: Message = {
       role: 'user',
       content: input,
@@ -853,6 +994,9 @@ export default function VafeChatWidget() {
   const avatarUrl = GITHUB_AVATAR_URL;
   const t = TRANSLATIONS[language];
 
+  // Статистика для инвесторов
+  const [rateLimitStats] = useState(() => getRateLimitStats());
+
   return (
     <>
       {/* Кнопка открытия */}
@@ -892,6 +1036,10 @@ export default function VafeChatWidget() {
                 <h3>{t.titles[mode]}</h3>
                 <p style={{ fontSize: '0.75rem', opacity: 0.9 }}>
                   {t.descriptions[mode]}
+                </p>
+                {/* Metadata для инвесторов */}
+                <p style={{ fontSize: '0.65rem', opacity: 0.7, marginTop: '2px' }}>
+                  📊 {rateLimitStats.percentageUsed}% ({rateLimitStats.remaining} ост.) • Tavily AI
                 </p>
               </div>
             </div>
