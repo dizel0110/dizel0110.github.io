@@ -98,7 +98,7 @@ function checkRateLimit(): RateLimitResult {
   }
 }
 
-function getRateLimitStats() {
+async function getRateLimitStats() {
   const monthKey = getMonthKey()
   const lastCheck = localStorage.getItem(RATE_LIMIT_KEYS.LAST_CHECK)
 
@@ -111,6 +111,29 @@ function getRateLimitStats() {
     }
   }
 
+  // === ПЫТАЕМСЯ ПОЛУЧИТЬ РЕАЛЬНУЮ СТАТИСТИКУ ИЗ TAVILY API ===
+  try {
+    const response = await fetch('https://vafe-api.vercel.app/api/v1/usage')
+
+    if (response.ok) {
+      const data = await response.json()
+
+      // Сохраняем реальные данные в localStorage
+      localStorage.setItem(RATE_LIMIT_KEYS.GLOBAL, String(data.requests_this_month))
+
+      return {
+        month: monthKey,
+        totalRequests: data.requests_this_month,
+        percentageUsed: data.percentage_used,
+        remaining: data.remaining
+      }
+    }
+  } catch (error) {
+    console.warn('Failed to get Tavily usage, using localStorage:', error)
+    // Fallback на localStorage
+  }
+
+  // === FALLBACK: localStorage ===
   const globalCount = parseInt(localStorage.getItem(RATE_LIMIT_KEYS.GLOBAL) || '0')
 
   return {
@@ -994,8 +1017,18 @@ export default function VafeChatWidget() {
   const avatarUrl = GITHUB_AVATAR_URL;
   const t = TRANSLATIONS[language];
 
-  // Статистика для инвесторов
-  const [rateLimitStats] = useState(() => getRateLimitStats());
+  // Статистика для инвесторов (обновляется при открытии чата)
+  const [rateLimitStats, setRateLimitStats] = useState<{
+    percentageUsed: number
+    remaining: number
+  } | null>(null)
+
+  // Загружаем статистику при монтировании и при открытии чата
+  useEffect(() => {
+    if (isOpen) {
+      getRateLimitStats().then(setRateLimitStats)
+    }
+  }, [isOpen])
 
   return (
     <>
@@ -1038,9 +1071,11 @@ export default function VafeChatWidget() {
                   {t.descriptions[mode]}
                 </p>
                 {/* Metadata для инвесторов */}
-                <p style={{ fontSize: '0.65rem', opacity: 0.7, marginTop: '2px' }}>
-                  📊 {rateLimitStats.percentageUsed}% ({rateLimitStats.remaining} ост.) • Tavily AI
-                </p>
+                {rateLimitStats && (
+                  <p style={{ fontSize: '0.65rem', opacity: 0.7, marginTop: '2px' }}>
+                    📊 {rateLimitStats.percentageUsed}% ({rateLimitStats.remaining} ост.) • Tavily AI
+                  </p>
+                )}
               </div>
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
