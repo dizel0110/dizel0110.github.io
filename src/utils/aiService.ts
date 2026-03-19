@@ -366,9 +366,12 @@ export async function generateAIResponse(
     console.log('[generateAIResponse] Вызов V-AFE API...');
     const apiResponse = await callVafeApi(query, 'general');
     console.log('[generateAIResponse] Получен ответ от API:', apiResponse);
+
+    // Источники будут возвращены из API (если API поддерживает)
+    // Пока используем дефолтный источник
     return {
       text: apiResponse,
-      sources: [{ id: 0, tag: 'V-AFE API', concept: 'Gemini via Vercel' }],
+      sources: [],
       searchQuery: query
     };
   } catch (error) {
