@@ -103,7 +103,7 @@ dizel0110.github.io/
 │   ├── components/
 │   │   ├── Hero.tsx                # Parallax mouse interaction
 │   │   ├── TechnicalCore.tsx       # AI Prophet + Expertise + GitHub Pulse
-│   │   ├── Lifestyle.tsx           # LA7 Gym + PlayKite + Quote
+│   │   ├── Lifestyle.tsx           # VEnt Gym + PlayKite + Quote
 │   │   ├── InvestorGateway.tsx     # ROI Calculator + Contact
 │   │   ├── Navigation.tsx          # Fixed nav + mobile menu
 │   │   ├── VafeChatWidget.tsx      # AI assistant (3 modes: Kiting/About/General)
@@ -144,7 +144,7 @@ npm run preview
 | **AI Prophet** | Live code snippet, tech stack pills, feature grid |
 | **Expertise Modules** | Clickable cards → GitHub repos |
 | **GitHub Pulse** | Simulated contribution graph |
-| **LA7 Gym** | SVG pulse chart → Instagram |
+| **VEnt** | SVG pulse chart → Instagram & Facebook |
 | **PlayKite** | Animated water background → playkite.com |
 | **ROI Calculator** | Interactive sliders → savings estimate |
 | **Contact Overlay** | Minimalist modal with Email/LinkedIn/Telegram |

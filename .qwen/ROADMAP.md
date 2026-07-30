@@ -12,7 +12,7 @@
 - [x] Hero section with parallax mouse interaction
 - [x] Technical Core: AI Prophet Golden Card + GitHub Pulse
 - [x] Expertise Modules (LLM, CV, MLOps) with repo links
-- [x] Lifestyle section: LA7 Gym + PlayKite cards
+- [x] Lifestyle section: VEnt Gym + PlayKite cards
 - [x] Investor Gateway with Agentic ROI Calculator
 - [x] Contact overlay with Email/LinkedIn/Telegram
 - [x] Smooth scrolling (Lenis) + Framer Motion animations
@@ -22,7 +22,7 @@
 ### Content
 - [x] All text in English (international audience)
 - [x] AI Prophet description based on real repo analysis
-- [x] Lifestyle cards link to Instagram (@beachmonkeyz) + PlayKite
+- [x] Lifestyle cards link to Instagram (@ventelgouna) + Facebook + PlayKite
 - [x] Quote connecting LLM work ↔ Wind ↔ Kiting metaphor
 
 ---
@@ -38,10 +38,10 @@
 ### Content Updates (When Ready)
 - [ ] **Cardoo Health Integration** — User has Cardoo health tracker mobile app
   - Check if Cardoo has web API or data export
-  - Integrate workout/health stats into LA7 Gym card
+  - Integrate workout/health stats into VEnt Gym card
   - Alternative: Manual progress updates via JSON file
 
-- [ ] **Instagram Content Activation** — @beachmonkeyz currently inactive
+- [ ] **Instagram Content Activation** — @ventelgouna currently inactive
   - User plans to post kiting videos, fitness progress
   - When active: embed Instagram feed or highlight reels
   - Consider: Grid of latest posts with hover previews
@@ -87,7 +87,7 @@
 
 6. **Video Backgrounds**
    - PlayKite card: subtle video loop of kiting
-   - LA7 Gym: workout montage (when content available)
+    - VEnt Gym: workout montage (when content available)
    - Optimize: WebM format, lazy loading
 
 ### Phase 4: Advanced (Low Priority / Experimental)
@@ -145,7 +145,7 @@
 - Fallback: Manual JSON updates for workout data
 
 ### Instagram Strategy
-- @beachmonkeyz (LA7 Gym) — currently grey/inactive in footer
+- @ventelgouna (VEnt Gym) — currently grey/inactive in footer
 - User plans to activate with:
   - Kiting videos
   - Fitness progress

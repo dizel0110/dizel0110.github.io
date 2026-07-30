@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Dumbbell, Wind, Heart, TrendingUp, Instagram, ExternalLink } from 'lucide-react';
+import { Dumbbell, Wind, Heart, TrendingUp, Instagram, Facebook, ExternalLink } from 'lucide-react';
 import { useRef } from 'react';
 
 export default function Lifestyle() {
@@ -39,8 +39,8 @@ export default function Lifestyle() {
           gridAutoRows: 'minmax(200px, auto)',
           gap: 'clamp(1rem, 2vw, 1.5rem)',
         }}>
-          {/* LA7 Gym Card */}
-          <LA7GymCard />
+          {/* VEnt Gym Card */}
+          <VEntGymCard />
           
           {/* PlayKite Card - Larger, Immersive */}
           <PlayKiteCard />
@@ -53,7 +53,7 @@ export default function Lifestyle() {
   );
 }
 
-function LA7GymCard() {
+function VEntGymCard() {
   // Simulated workout data
   const workoutData = [65, 72, 68, 75, 82, 78, 85, 88, 82, 90, 87, 92];
   const maxVal = Math.max(...workoutData);
@@ -65,22 +65,18 @@ function LA7GymCard() {
   }).join(' ');
 
   return (
-    <motion.a
-      href="https://www.instagram.com/beachmonkeyz/"
-      target="_blank"
-      rel="noopener noreferrer"
+    <motion.div
       initial={{ opacity: 0, x: -30 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7 }}
-      className="glass-card glass-card-hover"
+      className="glass-card"
       style={{
         gridColumn: 'span 5',
         padding: 'clamp(1.5rem, 3vw, 2.5rem)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        textDecoration: 'none',
       }}
     >
       <div>
@@ -112,18 +108,23 @@ function LA7GymCard() {
                 fontSize: '1.25rem',
                 color: '#f1f5f9',
               }}>
-                LA7 Gym
+                VEnt
               </h3>
               <p className="mono-text" style={{
                 fontSize: '0.75rem',
                 color: '#94a3b8',
               }}>
-                @beachmonkeyz · El Gouna
+                @ventelgouna · El Gouna
               </p>
             </div>
           </div>
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Instagram size={18} style={{ color: '#ef4444' }} />
+            <a href="https://www.instagram.com/ventelgouna/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', color: 'inherit' }}>
+              <Instagram size={18} style={{ color: '#ef4444' }} />
+            </a>
+            <a href="https://www.facebook.com/ventelgouna/" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', color: 'inherit' }}>
+              <Facebook size={18} style={{ color: '#ef4444' }} />
+            </a>
             <Heart size={20} style={{ color: '#ef4444', fill: '#ef444422' }} />
           </div>
         </div>
@@ -216,7 +217,7 @@ function LA7GymCard() {
           </span>
         </div>
       </div>
-    </motion.a>
+    </motion.div>
   );
 }
 
