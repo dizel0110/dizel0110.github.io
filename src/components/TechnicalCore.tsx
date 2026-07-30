@@ -34,7 +34,7 @@ export default function TechnicalCore() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(12, 1fr)',
-          gridTemplateRows: 'auto auto auto',
+          gridTemplateRows: 'auto auto auto auto',
           gap: 'clamp(1rem, 2vw, 1.5rem)',
         }}>
           {/* AI Prophet Golden Card - Large */}
@@ -43,71 +43,11 @@ export default function TechnicalCore() {
           {/* Expertise Modules - Side Column */}
           <ExpertiseModules />
           
+          {/* Achievements - Mini Cards Row */}
+          <AchievementsRow />
+
           {/* GitHub Pulse - Full Width Bottom */}
           <GitHubPulse />
-        </div>
-      </div>
-
-      {/* Achievements */}
-      <div style={{
-        marginTop: '1.5rem',
-        paddingTop: '1.25rem',
-        borderTop: '1px solid var(--glass-border)',
-      }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          marginBottom: '0.75rem',
-        }}>
-          <span className="mono-text" style={{ fontSize: '0.6875rem', color: '#64748b' }}>
-            ACHIEVEMENTS
-          </span>
-        </div>
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.5rem',
-        }}>
-          {[
-            { label: '📄 SSPP 2026 Paper Submitted', href: 'https://github.com/dizel0110/Text-HRM-RAG' },
-            { label: '🏆 YSDA Security — 300/300', href: 'https://contest.yandex.com/contest/95444/' },
-            { label: '📊 Kaggle VibeCoding Capstone', href: 'https://www.kaggle.com/competitions/vibecoding-agents-capstone-project/writeups/ai-prophet-multi-agent-massage-therapy-consultan' },
-            { label: '⚡ GitHub Quickdraw', href: 'https://github.com/dizel0110?tab=achievements' },
-            { label: '❄️ Arctic Code Vault', href: 'https://github.com/dizel0110?tab=achievements' },
-          ].map((badge) => (
-            <a
-              key={badge.label}
-              href={badge.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mono-text"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '20px',
-                fontSize: '0.6875rem',
-                color: '#94a3b8',
-                border: '1px solid var(--glass-border)',
-                textDecoration: 'none',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--accent-cyan)';
-                e.currentTarget.style.color = 'var(--accent-cyan)';
-                e.currentTarget.style.background = 'rgba(6, 182, 212, 0.08)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--glass-border)';
-                e.currentTarget.style.color = '#94a3b8';
-                e.currentTarget.style.background = 'transparent';
-              }}
-            >
-              {badge.label}
-            </a>
-          ))}
         </div>
       </div>
     </section>
@@ -396,6 +336,81 @@ function ExpertiseModules() {
         </motion.a>
       ))}
     </div>
+  );
+}
+
+function AchievementsRow() {
+  const achievements = [
+    { icon: '📄', title: 'SSPP 2026 Paper', subtitle: 'VORTEX-HRM RAG', href: 'https://github.com/dizel0110/Text-HRM-RAG', color: '#fbbf24' },
+    { icon: '🏆', title: 'YSDA Security Week', subtitle: '300 / 300', href: 'https://contest.yandex.com/contest/95444/', color: '#a78bfa' },
+    { icon: '📊', title: 'Kaggle Capstone', subtitle: 'AI Prophet Writeup', href: 'https://www.kaggle.com/competitions/vibecoding-agents-capstone-project/writeups/ai-prophet-multi-agent-massage-therapy-consultan', color: '#2dd4bf' },
+    { icon: '⚡', title: 'GitHub Quickdraw', subtitle: 'Closed PR in 5 min', href: 'https://github.com/dizel0110?tab=achievements', color: '#06b6d4' },
+    { icon: '❄️', title: 'Arctic Code Vault', subtitle: 'Code preserved for 1000 years', href: 'https://github.com/dizel0110?tab=achievements', color: '#40e0d0' },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      style={{
+        gridColumn: 'span 12',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+        gap: 'clamp(0.75rem, 1.5vw, 1rem)',
+      }}
+    >
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+        gridColumn: '1 / -1',
+      }}>
+        <span className="mono-text" style={{ fontSize: '0.6875rem', color: '#64748b', letterSpacing: '0.05em' }}>
+          MILESTONES
+        </span>
+        <div style={{ flex: 1, height: '1px', background: 'var(--glass-border)' }} />
+      </div>
+      {achievements.map((a, i) => (
+        <motion.a
+          key={a.title}
+          href={a.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: i * 0.06 }}
+          className="glass-card glass-card-hover"
+          style={{
+            padding: '1rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.25rem',
+            textDecoration: 'none',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '2px',
+            background: `linear-gradient(90deg, transparent, ${a.color}, transparent)`,
+          }} />
+          <span style={{ fontSize: '1.125rem', display: 'block', marginBottom: '0.25rem' }}>{a.icon}</span>
+          <span className="display-text" style={{ fontSize: '0.8125rem', color: '#f1f5f9', lineHeight: 1.3 }}>
+            {a.title}
+          </span>
+          <span className="mono-text" style={{ fontSize: '0.625rem', color: '#64748b' }}>
+            {a.subtitle}
+          </span>
+        </motion.a>
+      ))}
+    </motion.div>
   );
 }
 
