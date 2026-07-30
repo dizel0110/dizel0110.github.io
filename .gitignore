@@ -34,3 +34,5 @@ __pycache__/
 *.pyc
 *.pyo
 .env
+AGENTS.md
+resume.html
