@@ -65,12 +65,12 @@
       .header {
         padding-top: 20px;
       }
-      .project-link {
-        display: none;
-      }
       .badge {
         border-color: #e2e8f0 !important;
         color: #64748b !important;
+      }
+      .project-link, .live-link {
+        display: none;
       }
     }
 
@@ -252,6 +252,7 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 8px;
+      flex-wrap: wrap;
     }
     .project h3 {
       font-size: 16px;
@@ -274,14 +275,37 @@
       margin-top: 6px;
       font-weight: 500;
     }
+    .project-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
     .project-link {
-      font-size: 12px;
-      color: var(--accent);
+      font-size: 11px;
+      color: var(--text-light);
       text-decoration: none;
-      white-space: nowrap;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
     }
     .project-link:hover {
-      text-decoration: underline;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .live-link {
+      font-size: 11px;
+      color: #059669;
+      text-decoration: none;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #05966944;
+      background: #05966911;
+      transition: all 0.2s;
+    }
+    .live-link:hover {
+      background: #05966922;
+      border-color: #059669;
     }
 
     /* Education */
@@ -326,10 +350,12 @@
       border: 1px solid var(--border);
       color: var(--text-light);
       text-decoration: none;
+      transition: all 0.2s;
     }
     .badge:hover {
       border-color: var(--accent);
       color: var(--accent);
+      background: var(--card);
     }
 
     /* Summary */
@@ -337,6 +363,57 @@
       font-size: 14px;
       color: var(--text-light);
       line-height: 1.7;
+    }
+
+    /* CTA Banner (interactive web version) */
+    .cta-banner {
+      margin-top: 24px;
+      padding: 20px 24px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent)11, var(--accent-dark)11);
+      border: 1px solid var(--accent)33;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cta-banner a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .cta-banner a:hover {
+      text-decoration: underline;
+    }
+    .cta-banner .qr {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 4px;
+    }
+    .cta-banner .qr img {
+      width: 100%;
+      height: 100%;
+    }
+    .cta-banner .qr-placeholder {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      background: var(--card);
+      border: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--text-light);
+      text-align: center;
+      flex-shrink: 0;
     }
 
     /* Footer */
@@ -362,7 +439,7 @@
 
     <!-- Header -->
     <div class="header">
-      <div class="photo">DZ</div>
+      <div class="photo" id="photo">DZ</div>
       <div class="header-info">
         <h1>Dmitrii Zelenin</h1>
         <div class="title">LLM &amp; ML Engineer · AI Agent Developer</div>
@@ -390,7 +467,6 @@
             <div>💬 @dizel0110 (Telegram)</div>
             <div>🐙 github.com/dizel0110</div>
             <div>💼 linkedin.com/in/dizel0110</div>
-            <div>📄 <a href="https://hh.ru/resume/f956944fff0ee7c3eb0039ed1f763773435052" target="_blank" style="color:var(--accent)">HeadHunter Resume</a></div>
           </div>
         </div>
 
@@ -488,10 +564,9 @@
         <div class="section">
           <h2>Profile</h2>
           <div class="summary">
-            LLM &amp; ML Engineer specializing in AI agents, RAG architectures, and production ML pipelines. 
+            LLM &amp; ML Engineer specializing in <strong>AI agents</strong>, <strong>RAG architectures</strong>, and <strong>production ML pipelines</strong>. 
             Building multi-agent systems with Google ADK 2.0, fine-tuning LLMs (Gemini, Qwen, Llama), 
-            and deploying scalable MLOps pipelines. Strong foundation in computer vision, data engineering, 
-            and full-stack ML — from prototype to production.
+            and deploying scalable MLOps from prototype to production.
             <br /><br />
             Research paper <strong>VORTEX-HRM</strong> submitted to SSPP 2026 (Zapiski POMI, SMILES-2026 workshop).
             Kaggle writeup on multi-agent massage therapy consultant.
@@ -506,70 +581,87 @@
           <div class="project">
             <div class="project-header">
               <h3>AI Prophet</h3>
-              <a class="project-link" href="https://github.com/dizel0110/ai_prophet" target="_blank">github →</a>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/dizel0110/ai_prophet" target="_blank">GitHub</a>
+                <a class="project-link" href="https://www.kaggle.com/competitions/vibecoding-agents-capstone-project/writeups/ai-prophet-multi-agent-massage-therapy-consultan" target="_blank">Kaggle Writeup</a>
+              </div>
             </div>
             <div class="role">Multi-Agent Massage Consultant · Google ADK 2.0</div>
-            <p>6 specialized agents (questionnaire, photo, video, technique, music, synthesis) with a three-level fallback system. Unifies text, vision, and voice in a single Telegram interface. Automatic switching between Google Gemini and HuggingFace models guarantees 99.9% uptime.</p>
+            <p>6 specialized agents (questionnaire, photo, video, technique, music, synthesis) with a three-level fallback system (Gemini → HuggingFace). Unifies text, vision, and voice in a single Telegram interface with 99.9% uptime guarantee.</p>
             <div class="tech">Python · Aiogram 3.x · Gemini 2.5 · Whisper · HuggingFace · Docker</div>
           </div>
 
           <div class="project">
             <div class="project-header">
               <h3>VORTEX-AFE</h3>
-              <a class="project-link" href="https://github.com/dizel0110/vortex-afe" target="_blank">github →</a>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/dizel0110/vortex-afe" target="_blank">GitHub</a>
+              </div>
             </div>
             <div class="role">AI Kitesurfing Instructor · RAG Engine</div>
-            <p>ML-powered knowledge base for kiteboarding mechanics. RAPTOR-inspired RAG engine with 34 physics-based concepts on maneuvers, aerodynamics, kinematics, and control theory. Semantic search over structured knowledge with FastAPI backend.</p>
+            <p>ML-powered knowledge base for kiteboarding mechanics. RAPTOR-inspired RAG engine with 34 physics-based concepts covering maneuvers, aerodynamics, kinematics, and control theory. Semantic search over structured knowledge with FastAPI backend.</p>
             <div class="tech">Python · FastAPI · RAG · RAPTOR · Semantic Search</div>
           </div>
 
           <div class="project">
             <div class="project-header">
               <h3>VORTEX-HRM · Text-HRM-RAG</h3>
-              <a class="project-link" href="https://github.com/dizel0110/Text-HRM-RAG" target="_blank">github →</a>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/dizel0110/Text-HRM-RAG" target="_blank">GitHub</a>
+              </div>
             </div>
             <div class="role">Research Paper · SSPP 2026 (SMILES-2026)</div>
-            <p>Method for generating labeled texts (Human Reasoning Marks) for training reasoning LLMs. Cross-model Fast/Slow Router (84% accuracy) determines when to apply expensive VORTEX reasoning vs. cheap standard responses. Submitted to Zapiski POMI.</p>
+            <p>Novel method for generating labeled texts (Human Reasoning Marks) for training reasoning LLMs. Cross-model Fast/Slow Router achieves 84% accuracy in deciding when to apply expensive VORTEX reasoning vs. cheap standard responses. Submitted to Zapiski POMI.</p>
             <div class="tech">Python · LaTeX · Ollama · Jupyter · Local LLMs</div>
           </div>
 
           <div class="project">
             <div class="project-header">
               <h3>V-AFE API</h3>
-              <a class="project-link" href="https://github.com/dizel0110/vafe-api" target="_blank">github →</a>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/dizel0110/vafe-api" target="_blank">GitHub</a>
+                <a class="live-link" href="https://vafe-api.vercel.app" target="_blank">Live API</a>
+              </div>
             </div>
             <div class="role">Multi-Provider AI API · Vercel</div>
-            <p>API layer for the V-AFE ecosystem deployed on Vercel. Provider router (Gemini, OpenAI, Anthropic) with chat, insight extraction, analytics, and sync endpoints. Powers the portfolio chat widget.</p>
+            <p>API layer for the V-AFE ecosystem deployed on Vercel. Provider router (Gemini, OpenAI, Anthropic) with chat, insight extraction, analytics, and sync endpoints. Powers the portfolio chat widget with automatic failover between providers.</p>
             <div class="tech">TypeScript · Node.js · Vercel · Gemini · OpenAI · Anthropic</div>
           </div>
 
           <div class="project">
             <div class="project-header">
               <h3>NEWS-RECOMMENDER</h3>
-              <a class="project-link" href="https://github.com/dizel0110/news-recommender" target="_blank">github →</a>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/dizel0110/news-recommender" target="_blank">GitHub</a>
+              </div>
             </div>
             <div class="role">Production MLOps Pipeline</div>
-            <p>Scalable news recommendation system with MLflow tracking, DVC data versioning, Ray distributed compute, and LaBSE embeddings for multilingual content personalization. Supported by Yandex.Q &amp; ODS.ai community.</p>
+            <p>Scalable news recommendation system with MLflow tracking, DVC data versioning, Ray distributed compute, and LaBSE embeddings for multilingual content personalization. Supported by Yandex.Q and ODS.ai community.</p>
             <div class="tech">MLflow · DVC · Ray · LaBSE · Docker · CI/CD</div>
           </div>
 
           <div class="project">
             <div class="project-header">
               <h3>ITMO MedTech</h3>
-              <a class="project-link" href="https://github.com/dizel0110/ITMO" target="_blank">github →</a>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/dizel0110/ITMO" target="_blank">GitHub</a>
+              </div>
             </div>
             <div class="role">Computer Vision Service</div>
-            <p>Medical imaging analysis pipeline: object detection, segmentation, and classification. FastAPI backend with Telegram Bot integration and message queue for async processing.</p>
+            <p>Medical imaging analysis pipeline for object detection, segmentation, and classification. FastAPI backend with Telegram Bot integration and message queue for async processing of medical images.</p>
             <div class="tech">FastAPI · OpenCV · YOLO · Telegram Bot · Python</div>
           </div>
 
           <div class="project">
             <div class="project-header">
               <h3>Portfolio Site</h3>
-              <a class="project-link" href="https://github.com/dizel0110/dizel0110.github.io" target="_blank">github →</a>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/dizel0110/dizel0110.github.io" target="_blank">GitHub</a>
+                <a class="live-link" href="https://dizel0110.github.io" target="_blank">Live Site</a>
+              </div>
             </div>
             <div class="role">Personal Brand · React 19</div>
-            <p>Single-page portfolio with "Red Sea Cyber-Minimalism" design. Features embedded RAG chat widget with 3 modes (kiting, portfolio, general). ROI calculator, GitHub pulse simulation, smooth scroll animations. Deployed on GitHub Pages with Vercel API backend.</p>
+            <p>Single-page portfolio with "Red Sea Cyber-Minimalism" design. Embedded RAG chat widget with 3 modes (kiting, portfolio, general). Investor-facing ROI calculator, GitHub activity visualization, and smooth scroll animations. Deployed on GitHub Pages with Vercel API backend.</p>
             <div class="tech">React 19 · TypeScript · Vite · Framer Motion · Lenis · GitHub Pages</div>
           </div>
 
@@ -581,17 +673,17 @@
 
           <div class="edu-item">
             <h3>HARDML — Hardcore ML Course</h3>
-            <div class="meta">Completed August 2022 · Deep dive into ML/DL theory, mathematics, algorithms, neural networks</div>
+            <div class="meta">Completed August 2022 · Deep dive into ML/DL theory, mathematics, algorithms, and neural network architectures.</div>
           </div>
 
           <div class="edu-item">
-            <h3>ITMO University — ML Engineering</h3>
-            <div class="meta">Applied ML projects with industry partners. Medical CV, recommendation systems, production pipelines.</div>
+            <h3>ITMO University — ML Engineering Projects</h3>
+            <div class="meta">Applied ML projects with industry partners. Medical computer vision, recommendation systems, production pipeline development.</div>
           </div>
 
           <div class="edu-item">
             <h3>Self-Education &amp; Research</h3>
-            <div class="meta">Continuous learning: LLM fine-tuning, RAG architectures, multi-agent systems, MLOps. Following latest ML/AI research.</div>
+            <div class="meta">Continuous learning: LLM fine-tuning, RAG architectures, multi-agent orchestration, MLOps. Active follower of latest ML/AI research and papers.</div>
           </div>
         </div>
 
@@ -599,19 +691,33 @@
         <div class="section">
           <h2>Achievements</h2>
           <div class="badge-row">
-            <span class="badge">📄 SSPP 2026 Paper Submitted</span>
-            <span class="badge">🏆 YSDA Security — 300/300</span>
-            <span class="badge">📊 Kaggle VibeCoding Capstone</span>
-            <span class="badge">⚡ GitHub Quickdraw</span>
-            <span class="badge">❄️ Arctic Code Vault</span>
+            <a class="badge" href="https://github.com/dizel0110/Text-HRM-RAG" target="_blank">📄 SSPP 2026 Paper Submitted</a>
+            <a class="badge" href="https://contest.yandex.com/contest/95444/" target="_blank">🏆 YSDA Agents Security — 300/300</a>
+            <a class="badge" href="https://www.kaggle.com/competitions/vibecoding-agents-capstone-project/writeups/ai-prophet-multi-agent-massage-therapy-consultan" target="_blank">📊 Kaggle VibeCoding Capstone</a>
+            <a class="badge" href="https://github.com/dizel0110?tab=achievements" target="_blank">⚡ GitHub Quickdraw</a>
+            <a class="badge" href="https://github.com/dizel0110?tab=achievements" target="_blank">❄️ Arctic Code Vault Contributor</a>
           </div>
         </div>
 
       </div>
     </div>
 
+    <!-- Interactive Banner (web only) -->
+    <div class="cta-banner no-print">
+      <div class="qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://dizel0110.github.io&bgcolor=ffffff&color=06b6d4" alt="QR Code" />
+      </div>
+      <div style="flex:1">
+        <div style="font-weight:600;margin-bottom:4px;color:var(--text)">🚀 Explore the full interactive experience</div>
+        <div style="font-size:13px;color:var(--text-light);margin-bottom:6px">
+          Live portfolio with AI chat widget · Multi-agent demos · Interactive ROI calculator
+        </div>
+        <a href="https://dizel0110.github.io" target="_blank">dizel0110.github.io →</a>
+      </div>
+    </div>
+
     <div class="footer-note">
-      Built with ❤️ in El Gouna, Red Sea · Updated July 2026 · <a href="https://dizel0110.github.io" style="color:var(--accent)">dizel0110.github.io</a>
+      Built with ❤️ in El Gouna, Red Sea · Updated July 2026
     </div>
 
   </div>
