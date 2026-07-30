@@ -1,8 +1,8 @@
 {
   "project": "About Dmitry Knowledge Base",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "person": {
-    "name": "Дмитрий Зеленин",
+    "name": "Dmitrii Zelenin",
     "nickname": "dizel0110",
     "role": "LLM & ML Engineer",
     "tagline": "Architecting LLMs. Mastering the Wind.",
@@ -13,180 +13,180 @@
     {
       "id": 1,
       "tag": "About",
-      "concept": "Основная деятельность",
-      "description": "LLM & ML Engineer, специализация на AI-агентах и RAG-системах",
-      "details": "Разработка полномасштабных AI-решений: от прототипа до продакшена. Превращаю сложные задачи в работающие продукты"
+      "concept": "Core Focus",
+      "description": "LLM & ML Engineer, specializing in AI agents and RAG systems",
+      "details": "Full-scale AI solutions: from prototype to production. Turning complex problems into working products"
     },
     {
       "id": 2,
       "tag": "Skills",
-      "concept": "Технические навыки",
+      "concept": "Technical Skills",
       "description": "Python, PyTorch, Transformers, FastAPI, React",
-      "details": "Полный стек ML: data preparation → training → deployment → monitoring. Уверенно чувствую себя на всех этапах"
+      "details": "Full ML stack: data preparation → training → deployment → monitoring. Confident at every stage"
     },
     {
       "id": 3,
       "tag": "Skills",
       "concept": "LLM & RAG",
-      "description": "Fine-tuning (LoRA, QLoRA), RAG-архитектуры, агенты",
-      "details": "Опыт с Llama, Qwen, Gemini. Построение production RAG-пайплайнов. RAPTOR-индексация для сложных документов"
+      "description": "Fine-tuning (LoRA, QLoRA), RAG architectures, agents",
+      "details": "Experience with Llama, Qwen, Gemini. Building production RAG pipelines. RAPTOR indexing for complex documents"
     },
     {
       "id": 4,
       "tag": "Skills",
       "concept": "MLOps",
       "description": "MLflow, DVC, Docker, CI/CD, Ray",
-      "details": "Автоматизация ML-пайплайнов, версионирование, мониторинг. Знаю как доставить модель в продакшен"
+      "details": "ML pipeline automation, versioning, monitoring. Shipping models to production reliably"
     },
     {
       "id": 5,
       "tag": "Skills",
       "concept": "Computer Vision",
       "description": "OpenCV, YOLO, Segmentation, Classification",
-      "details": "Опыт работы с детекцией объектов, сегментацией, классификацией изображений. Медицинские и промышленные кейсы"
+      "details": "Object detection, segmentation, image classification. Medical and industrial use cases"
     },
     {
       "id": 6,
       "tag": "Skills",
       "concept": "Data Engineering",
-      "description": "SQL, Pandas, PySpark, ETL-пайплайны",
-      "details": "Построение надёжных пайплайнов данных. Работа с большими объёмами информации"
+      "description": "SQL, Pandas, PySpark, ETL pipelines",
+      "details": "Building reliable data pipelines. Working with large-scale data"
     },
     {
       "id": 7,
       "tag": "Project",
       "concept": "V-AFE",
-      "description": "AI инструктор по кайтбордингу с RAG-архитектурой",
-      "details": "34 концепта, RAPTOR-индекс, интеграция в GitHub Pages. Личный проект на стыке хобби и профессии"
+      "description": "AI kiteboarding instructor powered by RAG",
+      "details": "34 concepts, RAPTOR index, GitHub Pages integration. Personal project blending passion and profession"
     },
     {
       "id": 8,
       "tag": "Project",
       "concept": "AI PROPHET",
-      "description": "Мультимодальный AI-агент (Text + Vision + Voice)",
-      "details": "Fallback-система: Google Gemini → HuggingFace (Qwen/Llama) для 99.9% uptime. Универсальный ассистент"
+      "description": "Multimodal AI agent (Text + Vision + Voice)",
+      "details": "Fallback engine: Google Gemini → HuggingFace (Qwen/Llama) for 99.9% uptime. Universal assistant"
     },
     {
       "id": 9,
       "tag": "Project",
       "concept": "NEWS-RECOMMENDER",
-      "description": "Production MLOps пайплайн для рекомендаций новостей",
-      "details": "MLflow, DVC, Ray, LaBSE embeddings. Персонализация контента на основе предпочтений"
+      "description": "Production MLOps pipeline for news recommendations",
+      "details": "MLflow, DVC, Ray, LaBSE embeddings. Personalized content recommendations"
     },
     {
       "id": 10,
       "tag": "Project",
       "concept": "ITMO MedTech",
-      "description": "Computer Vision сервис для медицины",
-      "details": "FastAPI + CV + Telegram Bot с очередью сообщений. Анализ медицинских изображений"
+      "description": "Computer Vision service for healthcare",
+      "details": "FastAPI + CV + Telegram Bot with message queuing. Medical image analysis"
     },
     {
       "id": 11,
       "tag": "Project",
       "concept": "Portfolio Site",
-      "description": "React + TypeScript + Vite портфолио",
-      "details": "Современный стек, анимации Framer Motion, чат-виджет с RAG. Деплой на GitHub Pages"
+      "description": "React + TypeScript + Vite portfolio",
+      "details": "Modern stack, Framer Motion animations, RAG-powered chat widget. Deployed on GitHub Pages"
     },
     {
       "id": 12,
       "tag": "Education",
       "concept": "HARDML",
-      "description": "Хардкорный ML курс (завершён в августе 2022)",
-      "details": "Глубокое погружение в ML/DL теорию и практику. Математика, алгоритмы, нейросети"
+      "description": "Hardcore ML course (completed August 2022)",
+      "details": "Deep dive into ML/DL theory and practice. Mathematics, algorithms, neural networks"
     },
     {
       "id": 13,
       "tag": "Education",
       "concept": "ITMO University",
-      "description": "ML Engineering проекты в ИТМО",
-      "details": "Прикладные задачи ML в индустрии. Реальные кейсы от партнёров университета"
+      "description": "ML Engineering projects at ITMO",
+      "details": "Applied ML tasks in industry. Real-world cases from university partners"
     },
     {
       "id": 14,
       "tag": "Education",
-      "concept": "Самообразование",
-      "description": "Постоянное изучение нового в ML/AI",
-      "details": "Слежу за последними исследованиями, читаю papers, экспериментирую с новыми моделями"
+      "concept": "Self-Education",
+      "description": "Continuous learning in ML/AI",
+      "details": "Following latest research, reading papers, experimenting with new models"
     },
     {
       "id": 15,
       "tag": "Contact",
       "concept": "Email",
       "description": "dizel0110@gmail.com",
-      "details": "Основной способ связи. Отвечаю в течение 24 часов"
+      "details": "Primary contact method. Response within 24 hours"
     },
     {
       "id": 16,
       "tag": "Contact",
       "concept": "GitHub",
       "description": "https://github.com/dizel0110",
-      "details": "62+ репозитория, включая V-AFE и AI PROPHET. Открытый код и проекты"
+      "details": "62+ repositories including V-AFE and AI PROPHET. Open source code and projects"
     },
     {
       "id": 17,
       "tag": "Contact",
       "concept": "Telegram",
       "description": "@dizel0110",
-      "details": "Быстрый ответ в мессенджере. Предпочтительный способ связи"
+      "details": "Quick replies in messenger. Preferred contact method"
     },
     {
       "id": 18,
       "tag": "Contact",
       "concept": "LinkedIn",
       "description": "https://linkedin.com/in/dizel0110",
-      "details": "Профессиональная сеть. Рекомендации и опыт работы"
+      "details": "Professional network. Recommendations and work experience"
     },
     {
       "id": 19,
       "tag": "Contact",
       "concept": "Instagram",
       "description": "https://instagram.com/dizel0110",
-      "details": "Кайтинг и жизнь в El Gouna. Лайфстайл и хобби"
+      "details": "Kitesurfing and life in El Gouna. Lifestyle and hobbies"
     },
     {
       "id": 20,
       "tag": "Philosophy",
-      "concept": "Подход к работе",
-      "description": "От тактильного опыта к цифровой системе",
-      "details": "Превращаю физический опыт в инженерные решения (как V-AFE для кайтинга). Понимаю предметную область изнутри"
+      "concept": "Work Approach",
+      "description": "From physical experience to digital systems",
+      "details": "Transforming hands-on experience into engineering solutions (like V-AFE for kitesurfing). Deep domain understanding"
     },
     {
       "id": 21,
       "tag": "Philosophy",
-      "concept": "Локация",
-      "description": "El Gouna, Egypt — 270+ ветреных дней в году",
-      "details": "Идеальное место для кайтинга и удалённой работы. Работаю из любого часового пояса"
+      "concept": "Location",
+      "description": "El Gouna, Egypt — 270+ windy days a year",
+      "details": "Perfect spot for kitesurfing and remote work. Working from any timezone"
     },
     {
       "id": 22,
       "tag": "Availability",
-      "concept": "Поиск работы",
-      "description": "Data Scientist, ML-engineer, AI Agent Dev, Data Analyst",
-      "details": "Открыт к предложениям в области LLM & ML Engineering. Full-time, part-time, contract"
+      "concept": "Open to Work",
+      "description": "Data Scientist, ML Engineer, AI Agent Dev, Data Analyst",
+      "details": "Open to opportunities in LLM & ML Engineering. Full-time, part-time, contract"
     },
     {
       "id": 23,
       "tag": "Availability",
-      "concept": "Формат работы",
+      "concept": "Work Format",
       "description": "Remote, Hybrid, Relocation",
-      "details": "Готов к удалённой работе, гибриду или переезду. Гибкий график"
+      "details": "Open to remote, hybrid, or relocation. Flexible schedule"
     },
     {
       "id": 24,
       "tag": "Languages",
-      "concept": "Языки",
-      "description": "Русский (native), English (B1-B2)",
-      "details": "Свободно читаю документацию и papers на английском. Работаю в международных командах"
+      "concept": "Languages",
+      "description": "Russian (native), English (B1-B2)",
+      "details": "Fluent in reading English documentation and papers. Working in international teams"
     }
   ],
   "suggestions": [
-    "Расскажи о себе",
-    "Какие проекты у тебя есть?",
-    "Как с тобой связаться?",
-    "Где ты находишься?",
-    "Какие у тебя навыки?",
-    "Открыт к работе?",
-    "Какой опыт образования?",
-    "На каком формате работы открыт?"
+    "Tell me about yourself",
+    "What projects do you have?",
+    "How to contact you?",
+    "Where are you located?",
+    "What are your skills?",
+    "Are you open to work?",
+    "What is your education?",
+    "What work format are you open to?"
   ]
 }

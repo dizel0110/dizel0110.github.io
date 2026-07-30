@@ -13,16 +13,23 @@ interface KnowledgeData {
   knowledge_base: Concept[];
 }
 
-const tagMeta: Record<string, { color: string; order: number }> = {
-  About: { color: '#40e0d0', order: 0 },
-  Skills: { color: '#06b6d4', order: 1 },
-  Project: { color: '#2dd4bf', order: 2 },
-  Education: { color: '#fbbf24', order: 3 },
-  Contact: { color: '#a78bfa', order: 4 },
-  Philosophy: { color: '#f472b6', order: 5 },
-  Availability: { color: '#34d399', order: 6 },
-  Languages: { color: '#38bdf8', order: 7 },
+const tagMeta: Record<string, { color: string; icon: string; order: number }> = {
+  About: { color: '#40e0d0', icon: '👤', order: 0 },
+  Skills: { color: '#06b6d4', icon: '🛠️', order: 1 },
+  Project: { color: '#2dd4bf', icon: '🚀', order: 2 },
+  Education: { color: '#fbbf24', icon: '🎓', order: 3 },
+  Contact: { color: '#a78bfa', icon: '📬', order: 4 },
+  Philosophy: { color: '#f472b6', icon: '🧭', order: 5 },
+  Availability: { color: '#34d399', icon: '🔍', order: 6 },
+  Languages: { color: '#38bdf8', icon: '🌐', order: 7 },
 };
+
+function isUrl(text: string): string | null {
+  if (/^https?:\/\/\S+$/.test(text)) return text;
+  if (/^[\w.+-]+@[\w-]+\.[\w.]+$/.test(text)) return `mailto:${text}`;
+  if (/^@\w+$/.test(text)) return `https://t.me/${text.slice(1)}`;
+  return null;
+}
 
 export default function KnowledgeBase() {
   const [data, setData] = useState<KnowledgeData | null>(null);
@@ -63,7 +70,7 @@ export default function KnowledgeBase() {
             fontSize: 'clamp(2rem, 4vw, 3.5rem)',
             color: '#f1f5f9',
           }}>
-            24 Concepts of <span className="gradient-text">Dmitry</span>
+            Knowledge <span className="gradient-text">Base</span>
           </h2>
         </motion.div>
 
@@ -105,7 +112,7 @@ export default function KnowledgeBase() {
                   }
                 }}
               >
-                {tag === 'all' ? '✨ All' : tag}
+                {tag === 'all' ? '✨ All' : `${meta?.icon || ''} ${tag}`}
               </button>
             );
           })}
@@ -164,13 +171,34 @@ export default function KnowledgeBase() {
                   {item.concept}
                 </h4>
 
-                <p className="mono-text" style={{
-                  fontSize: '0.75rem',
-                  color: '#94a3b8',
-                  lineHeight: 1.6,
-                }}>
-                  {item.description}
-                </p>
+                {isUrl(item.description) ? (
+                  <a
+                    href={isUrl(item.description)!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mono-text"
+                    style={{
+                      fontSize: '0.75rem',
+                      color: color,
+                      lineHeight: 1.6,
+                      textDecoration: 'none',
+                      display: 'inline-block',
+                      transition: 'opacity 0.2s',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
+                    onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                  >
+                    {item.description} ↗
+                  </a>
+                ) : (
+                  <p className="mono-text" style={{
+                    fontSize: '0.75rem',
+                    color: '#94a3b8',
+                    lineHeight: 1.6,
+                  }}>
+                    {item.description}
+                  </p>
+                )}
 
                 <details style={{ marginTop: '0.75rem' }}>
                   <summary className="mono-text" style={{
