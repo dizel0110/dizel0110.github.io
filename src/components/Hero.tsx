@@ -132,7 +132,7 @@ export default function Hero() {
         >
           <Wind size={14} style={{ color: 'var(--accent-cyan)' }} />
           <span className="mono-text" style={{ color: '#94a3b8' }}>
-            270+ Windy Days / El Gouna
+            📍 Hurghada ↔ El Gouna · Red Sea, Egypt
           </span>
         </motion.div>
 
@@ -171,7 +171,7 @@ export default function Hero() {
         >
           LLM & ML Engineer building the next generation of Agentic AI.
           <br />
-          Driven by the 270+ windy days of El Gouna.
+          Based on the Hurghada coast, training in El Gouna — 270+ windy days a year.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -220,6 +220,25 @@ export default function Hero() {
             }}
           >
             GitHub →
+          </a>
+          <a
+            href="/resume.html"
+            className="glass-card glass-card-hover"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.875rem 1.75rem',
+              textDecoration: 'none',
+              color: 'var(--accent-cyan)',
+              fontSize: '0.875rem',
+              border: '1px solid rgba(6, 182, 212, 0.3)',
+              transition: 'all 0.3s',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--accent-cyan)'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(6, 182, 212, 0.3)'}
+          >
+            📄 Resume
           </a>
         </motion.div>
       </div>

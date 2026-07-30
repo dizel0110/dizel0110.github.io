@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dmitrii | Resume</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --text: #1F2328;
+      --text-light: #5A646E;
+      --accent: #1A7F37;
+      --border: #D0D7DE;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0D1117;
+        --text: #C9D1D9;
+        --text-light: #8B949E;
+        --accent: #58A6FF;
+        --border: #30363D;
+      }
+    }
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 32px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2, h3 {
+      color: var(--accent);
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+    .subtitle {
+      color: var(--text-light);
+      font-size: 18px;
+      margin: 0 0 20px 0;
+    }
+    .contact {
+      margin: 16px 0;
+      color: var(--text-light);
+      font-size: 14px;
+    }
+    .section {
+      margin: 32px 0;
+    }
+    .section h2 {
+      font-size: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0;
+    }
+    .skill {
+      background: var(--card-bg, #F6F8FA);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      border: 1px solid var(--border);
+    }
+    .project {
+      margin: 16px 0;
+    }
+    .project h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    .tech {
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+    footer {
+      margin-top: 40px;
+      color: var(--text-light);
+      font-size: 12px;
+      text-align: center;
+    }
+    @media print {
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Dmitrii</h1>
+  <div class="subtitle">&lt;dizel0110&gt; • Data Scientist & AI Agent Developer</div>
+  <div class="contact">
+    📧 <a href="mailto:your-email@example.com">email@example.com</a> |
+    🌐 <a href="https://dizel0110.github.io">dizel0110.github.io</a> |
+    💼 <a href="https://hh.ru/resume/f956944fff0ee7c3eb0039ed1f763773435052">Resume on HH</a> |
+    🐙 <a href="https://github.com/dizel0110">GitHub</a>
+  </div>
+
+  <div class="section">
+    <h2>💼 Experience</h2>
+    <p>Passionate Data Scientist and ML Engineer with a strong focus on building autonomous AI agents, RAG systems, and scalable machine learning pipelines. Experienced in deploying local LLMs with Ollama, orchestrating multi-agent teams with LangChain, CrewAI, and AutoGen, and implementing production-ready solutions on GCP.</p>
+  </div>
+
+  <div class="section">
+    <h2>🛠️ Tech Stack</h2>
+    <div class="skill-list">
+      <div class="skill">Python</div>
+      <div class="skill">PyTorch</div>
+      <div class="skill">FastAPI</div>
+      <div class="skill">LangChain & LangGraph</div>
+      <div class="skill">Ollama</div>
+      <div class="skill">Llama 3</div>
+      <div class="skill">Hugging Face</div>
+      <div class="skill">ChromaDB</div>
+      <div class="skill">GCP</div>
+      <div class="skill">Docker</div>
+      <div class="skill">Git</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>🚀 Projects</h2>
+    <div class="project">
+      <h3>Autonomous Agent Team (CrewAI + LangGraph)</h3>
+      <p>Multi-agent system for automated data analysis and reporting.</p>
+      <div class="tech">Python • LangChain • GCP • ChromaDB</div>
+    </div>
+    <div class="project">
+      <h3>Local RAG Assistant (Ollama + Llama 3)</h3>
+      <p>Privacy-first document retrieval assistant running locally.</p>
+      <div class="tech">Ollama • FastAPI • React • LangChain</div>
+    </div>
+    <div class="project">
+      <h3>ML Pipeline Orchestration</h3>
+      <p>Scalable training and inference pipeline with versioning and monitoring.</p>
+      <div class="tech">PyTorch • MLflow • RabbitMQ • Django</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📚 Education</h2>
+    <p>Bachelor’s in Computer Science or related field (add if applicable)</p>
+  </div>
+
+  <footer>
+    Generated from GitHub profile • Updated on <span id="date"></span>
+  </footer>
+
+  <script>
+    document.getElementById("date").textContent = new Date().toLocaleDateString();
+  </script>
+</body>
+</html>

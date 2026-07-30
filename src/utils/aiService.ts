@@ -264,8 +264,8 @@ function generateFallbackResponse(query: string, searchResults?: Array<{ title: 
   if (q.includes('время') || q.includes('который час') || q.includes('what time') || q.includes('current time')) {
     const now = new Date();
     return lang === 'en'
-      ? `It's ${now.toLocaleTimeString('en-US')}. In El Gouna (Egypt, UTC+2) the time is different from yours.`
-      : `Сейчас ${now.toLocaleTimeString('ru-RU')}. В El Gouna (Египет, UTC+2) время отличается от вашего.`;
+      ? `It's ${now.toLocaleTimeString('en-US')}. Here on the Hurghada coast (Egypt, UTC+2) the time is different from yours.`
+      : `Сейчас ${now.toLocaleTimeString('ru-RU')}. Я на побережье Хургады (Египет, UTC+2) — время отличается от вашего.`;
   }
 
   if (q.includes('дата') || q.includes('число') || q.includes('what date') || q.includes('today is')) {
@@ -278,8 +278,8 @@ function generateFallbackResponse(query: string, searchResults?: Array<{ title: 
   // === Погода и ветер ===
   if (q.includes('погод') || q.includes('ветер') || q.includes('weather') || q.includes('wind')) {
     return lang === 'en'
-      ? 'In El Gouna (Egypt), where Dmitry lives, there are about 270 windy days per year — perfect conditions for kitesurfing! 🪁 Average water temperature +25°C, air +30°C.'
-      : 'В El Gouna (Египет), где живёт Дмитрий, около 270 ветреных дней в году — идеальные условия для кайтбординга! 🪁 Средняя температура воды +25°C, воздуха +30°C.';
+      ? 'On the Hurghada coast (Egypt), where Dmitry lives, there are about 270 windy days per year — perfect conditions for kitesurfing! 🪁 He trains at VEnt Gym in El Gouna. Average water temperature +25°C, air +30°C.'
+      : 'На побережье Хургады (Египет), где живёт Дмитрий, около 270 ветреных дней в году — идеальные условия для кайтбординга! 🪁 Тренируется в VEnt Gym в Эль-Гуне. Средняя температура воды +25°C, воздуха +30°C.';
   }
 
   // === Вопросы о Дмитрии — перенаправляем в режим "О себе" ===
@@ -439,8 +439,8 @@ export async function generateAIResponse(
   if (formatKeywords.some(k => q.includes(k))) {
     return {
       text: lang === 'en'
-        ? '**Work Format:**\n\n• **Remote** — Working from anywhere\n• **Hybrid** — Mix of remote and office\n• **Relocation** — Ready to relocate\n\nFlexible schedule. Working from any timezone (currently El Gouna, Egypt).'
-        : '**Формат работы:**\n\n• **Remote** — Работа из любой точки\n• **Hybrid** — Смесь удалёнки и офиса\n• **Relocation** — Готов к переезду\n\nГибкий график. Работаю из любого часового пояса (сейчас El Gouna, Египет).',
+        ? '**Work Format:**\n\n• **Remote** — Working from anywhere\n• **Hybrid** — Mix of remote and office\n• **Relocation** — Ready to relocate\n\nFlexible schedule. Working from any timezone (currently Hurghada ↔ El Gouna, Egypt).'
+        : '**Формат работы:**\n\n• **Remote** — Работа из любой точки\n• **Hybrid** — Смесь удалёнки и офиса\n• **Relocation** — Готов к переезду\n\nГибкий график. Работаю из любого часового пояса (сейчас Хургада ↔ Эль-Гуна, Египет).',
       sources: [
         { id: 1, tag: 'Availability', concept: 'Work Format', url: 'https://linkedin.com/in/dizel0110' }
       ] as any[]
