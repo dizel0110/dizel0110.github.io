@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 import Hero from './components/Hero';
 import TechnicalCore from './components/TechnicalCore';
 import Lifestyle from './components/Lifestyle';
+import KnowledgeBase from './components/KnowledgeBase';
 import InvestorGateway from './components/InvestorGateway';
 import Navigation from './components/Navigation';
 import './index.css';
@@ -38,6 +39,7 @@ function App() {
         <Hero />
         <TechnicalCore />
         <Lifestyle />
+        <KnowledgeBase />
         <InvestorGateway />
       </main>
       <VafeChatWidget />
