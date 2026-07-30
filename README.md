@@ -15,7 +15,7 @@ Personal brand ecosystem for **dizel0110** — LLM & ML Engineer building the ne
 LLM & ML Engineer specializing in **AI agents**, **RAG architectures**, and **production ML pipelines**. 
 
 - 🔭 Building **AI Prophet** — multi-agent massage consultant (Google ADK 2.0)
-- 🪁 Created **VORTEX-AFE** — AI kitesurfing instructor with RAG (34 physics-based concepts)
+- 🪁 Created **VORTEX** — AI kitesurfing instructor with RAG (34 physics-based concepts)
 - 📝 Submitted **VORTEX-HRM** paper to SSPP 2026 (Zapiski POMI, SMILES-2026 workshop)
 - 🏆 Competed in **Kaggle VibeCoding Agents Capstone** — Multi-Agent Massage Therapy Consultant
 - 🎯 Open to work: Data Scientist, ML Engineer, AI Agent Developer
@@ -30,7 +30,7 @@ LLM & ML Engineer specializing in **AI agents**, **RAG architectures**, and **pr
                     ┌─────────────────────────────────────┐
                     │     dizel0110.github.io              │
                     │  Personal Portfolio (React 19 + TS)  │
-                    │  V-AFE Chat Widget · RAG Assistant   │
+                     │  V-AFE Chat · Knowledge Base (24) | RAG │
                     └──────────┬──────────────────────────┘
                                │
           ┌────────────────────┼────────────────────┐
@@ -102,10 +102,11 @@ dizel0110.github.io/
 ├── src/
 │   ├── components/
 │   │   ├── Hero.tsx                # Parallax mouse interaction
-│   │   ├── TechnicalCore.tsx       # AI Prophet + Expertise + GitHub Pulse
+│   │   ├── TechnicalCore.tsx       # AI Prophet + Expertise + Milestones + GitHub Pulse
+│   │   ├── KnowledgeBase.tsx       # 24-concept filterable knowledge base
 │   │   ├── Lifestyle.tsx           # VEnt Gym + PlayKite + Quote
 │   │   ├── InvestorGateway.tsx     # ROI Calculator + Contact
-│   │   ├── Navigation.tsx          # Fixed nav + mobile menu
+│   │   ├── Navigation.tsx          # Fixed nav + mobile menu (Work, Lifestyle, Knowledge, Investors)
 │   │   ├── VafeChatWidget.tsx      # AI assistant (3 modes: Kiting/About/General)
 │   │   └── VafeChatWidget.css      # Chat widget styles
 │   ├── utils/
@@ -143,6 +144,8 @@ npm run preview
 | **Hero** | Parallax mouse tracking, animated particles |
 | **AI Prophet** | Live code snippet, tech stack pills, feature grid |
 | **Expertise Modules** | Clickable cards → GitHub repos |
+| **Milestones** | 5 mini-cards: SSPP 2026, YSDA, Kaggle, Quickdraw, Arctic Code Vault |
+| **Knowledge Base** | 24 concepts with tag filters (Skills, Projects, Education, Contact…) |
 | **GitHub Pulse** | Simulated contribution graph |
 | **VEnt** | SVG pulse chart → Instagram & Facebook |
 | **PlayKite** | Animated water background → playkite.com |
