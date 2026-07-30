@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dmitrii Zelenin — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --accent: #06b6d4;
+      --accent-dark: #0891b2;
+      --border: #e2e8f0;
+      --card: #f8fafc;
+      --shadow: rgba(0, 0, 0, 0.06);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --text: #e2e8f0;
+        --text-light: #94a3b8;
+        --accent: #22d3ee;
+        --accent-dark: #06b6d4;
+        --border: #1e293b;
+        --card: #1e293b;
+        --shadow: rgba(0, 0, 0, 0.3);
+      }
+    }
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 40px 48px;
+    }
+    @media print {
+      body {
+        background: white;
+        color: #1e293b;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page {
+        padding: 0;
+        max-width: 100%;
+      }
+      .header {
+        padding-top: 20px;
+      }
+      .project-link {
+        display: none;
+      }
+      .badge {
+        border-color: #e2e8f0 !important;
+        color: #64748b !important;
+      }
+    }
+
+    /* Toolbar */
+    .toolbar {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      gap: 8px;
+      z-index: 100;
+    }
+    .toolbar button {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .toolbar button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Photo + Header */
+    .header {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--border);
+    }
+    .photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: white;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .photo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .header-info {
+      flex: 1;
+    }
+    .header-info h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+    .header-info .title {
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .header-info .tagline {
+      font-size: 14px;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+    .contact-row a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-row a:hover {
+      color: var(--accent);
+    }
+
+    /* Layout */
+    .resume-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 32px;
+    }
+    @media (max-width: 768px) {
+      .resume-grid {
+        grid-template-columns: 1fr;
+      }
+      .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .contact-row {
+        justify-content: center;
+      }
+    }
+
+    /* Left column */
+    .left-col h2 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .left-col .section {
+      margin-bottom: 28px;
+    }
+
+    /* Right column */
+    .right-col h2 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .right-col .section {
+      margin-bottom: 32px;
+    }
+
+    /* Skills */
+    .skill-group {
+      margin-bottom: 16px;
+    }
+    .skill-group h3 {
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .skill-tag {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    /* Project card */
+    .project {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .project:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .project h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .project .role {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .project p {
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    .project .tech {
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+    .project-link {
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .project-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Education */
+    .edu-item {
+      margin-bottom: 14px;
+    }
+    .edu-item h3 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .edu-item .meta {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    /* Languages */
+    .lang-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 4px 0;
+    }
+    .lang-item .level {
+      color: var(--text-light);
+      font-size: 12px;
+    }
+
+    /* Badges */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      color: var(--text-light);
+      text-decoration: none;
+    }
+    .badge:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Summary */
+    .summary {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer-note {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toolbar -->
+  <div class="toolbar no-print">
+    <button onclick="window.print()">🖨️ Download PDF</button>
+    <button onclick="window.location.href='https://dizel0110.github.io'">← Back to Portfolio</button>
+  </div>
+
+  <div class="page">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="photo">DZ</div>
+      <div class="header-info">
+        <h1>Dmitrii Zelenin</h1>
+        <div class="title">LLM &amp; ML Engineer · AI Agent Developer</div>
+        <div class="tagline">"Architecting LLMs. Mastering the Wind."</div>
+        <div class="contact-row">
+          <span>📍 El Gouna, Egypt</span>
+          <a href="mailto:dizel0110@gmail.com">✉️ dizel0110@gmail.com</a>
+          <a href="https://t.me/dizel0110" target="_blank">💬 @dizel0110</a>
+          <a href="https://github.com/dizel0110" target="_blank">🐙 github.com/dizel0110</a>
+          <a href="https://linkedin.com/in/dizel0110" target="_blank">💼 linkedin.com/in/dizel0110</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="resume-grid">
+
+      <!-- LEFT COLUMN -->
+      <div class="left-col">
+
+        <!-- Contact -->
+        <div class="section">
+          <h2>Contact</h2>
+          <div style="font-size:13px;color:var(--text-light);line-height:2">
+            <div>📧 dizel0110@gmail.com</div>
+            <div>💬 @dizel0110 (Telegram)</div>
+            <div>🐙 github.com/dizel0110</div>
+            <div>💼 linkedin.com/in/dizel0110</div>
+            <div>📄 <a href="https://hh.ru/resume/f956944fff0ee7c3eb0039ed1f763773435052" target="_blank" style="color:var(--accent)">HeadHunter Resume</a></div>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="section">
+          <h2>Core Skills</h2>
+
+          <div class="skill-group">
+            <h3>LLM &amp; AI Agents</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Gemini</span>
+              <span class="skill-tag">Llama</span>
+              <span class="skill-tag">Qwen</span>
+              <span class="skill-tag">Google ADK 2.0</span>
+              <span class="skill-tag">RAG</span>
+              <span class="skill-tag">RAPTOR</span>
+              <span class="skill-tag">Fine-tuning (LoRA/QLoRA)</span>
+              <span class="skill-tag">Whisper</span>
+              <span class="skill-tag">Multi-agent</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <h3>ML &amp; Data</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">PyTorch</span>
+              <span class="skill-tag">Transformers</span>
+              <span class="skill-tag">OpenCV</span>
+              <span class="skill-tag">YOLO</span>
+              <span class="skill-tag">Pandas</span>
+              <span class="skill-tag">PySpark</span>
+              <span class="skill-tag">SQL</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <h3>MLOps &amp; Infrastructure</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">MLflow</span>
+              <span class="skill-tag">DVC</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">Ray</span>
+              <span class="skill-tag">FastAPI</span>
+              <span class="skill-tag">CI/CD</span>
+              <span class="skill-tag">Vercel</span>
+              <span class="skill-tag">Ollama</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <h3>Frontend &amp; Tools</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">React 19</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">Vite</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">LaTeX</span>
+              <span class="skill-tag">Framer Motion</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Languages -->
+        <div class="section">
+          <h2>Languages</h2>
+          <div class="lang-item">
+            <span>🇷🇺 Russian</span>
+            <span class="level">Native</span>
+          </div>
+          <div class="lang-item">
+            <span>🇬🇧 English</span>
+            <span class="level">B1–B2 (Intermediate)</span>
+          </div>
+        </div>
+
+        <!-- Availability -->
+        <div class="section">
+          <h2>Availability</h2>
+          <div style="font-size:13px;color:var(--text-light);line-height:1.8">
+            <div>✅ Data Scientist</div>
+            <div>✅ ML Engineer</div>
+            <div>✅ AI Agent Developer</div>
+            <div>✅ Data Analyst</div>
+            <div style="margin-top:6px">📍 Remote · Hybrid · Relocation</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="right-col">
+
+        <!-- Summary -->
+        <div class="section">
+          <h2>Profile</h2>
+          <div class="summary">
+            LLM &amp; ML Engineer specializing in AI agents, RAG architectures, and production ML pipelines. 
+            Building multi-agent systems with Google ADK 2.0, fine-tuning LLMs (Gemini, Qwen, Llama), 
+            and deploying scalable MLOps pipelines. Strong foundation in computer vision, data engineering, 
+            and full-stack ML — from prototype to production.
+            <br /><br />
+            Research paper <strong>VORTEX-HRM</strong> submitted to SSPP 2026 (Zapiski POMI, SMILES-2026 workshop).
+            Kaggle writeup on multi-agent massage therapy consultant.
+            Open to challenging roles in AI engineering and data science.
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="section">
+          <h2>Key Projects</h2>
+
+          <div class="project">
+            <div class="project-header">
+              <h3>AI Prophet</h3>
+              <a class="project-link" href="https://github.com/dizel0110/ai_prophet" target="_blank">github →</a>
+            </div>
+            <div class="role">Multi-Agent Massage Consultant · Google ADK 2.0</div>
+            <p>6 specialized agents (questionnaire, photo, video, technique, music, synthesis) with a three-level fallback system. Unifies text, vision, and voice in a single Telegram interface. Automatic switching between Google Gemini and HuggingFace models guarantees 99.9% uptime.</p>
+            <div class="tech">Python · Aiogram 3.x · Gemini 2.5 · Whisper · HuggingFace · Docker</div>
+          </div>
+
+          <div class="project">
+            <div class="project-header">
+              <h3>VORTEX-AFE</h3>
+              <a class="project-link" href="https://github.com/dizel0110/vortex-afe" target="_blank">github →</a>
+            </div>
+            <div class="role">AI Kitesurfing Instructor · RAG Engine</div>
+            <p>ML-powered knowledge base for kiteboarding mechanics. RAPTOR-inspired RAG engine with 34 physics-based concepts on maneuvers, aerodynamics, kinematics, and control theory. Semantic search over structured knowledge with FastAPI backend.</p>
+            <div class="tech">Python · FastAPI · RAG · RAPTOR · Semantic Search</div>
+          </div>
+
+          <div class="project">
+            <div class="project-header">
+              <h3>VORTEX-HRM · Text-HRM-RAG</h3>
+              <a class="project-link" href="https://github.com/dizel0110/Text-HRM-RAG" target="_blank">github →</a>
+            </div>
+            <div class="role">Research Paper · SSPP 2026 (SMILES-2026)</div>
+            <p>Method for generating labeled texts (Human Reasoning Marks) for training reasoning LLMs. Cross-model Fast/Slow Router (84% accuracy) determines when to apply expensive VORTEX reasoning vs. cheap standard responses. Submitted to Zapiski POMI.</p>
+            <div class="tech">Python · LaTeX · Ollama · Jupyter · Local LLMs</div>
+          </div>
+
+          <div class="project">
+            <div class="project-header">
+              <h3>V-AFE API</h3>
+              <a class="project-link" href="https://github.com/dizel0110/vafe-api" target="_blank">github →</a>
+            </div>
+            <div class="role">Multi-Provider AI API · Vercel</div>
+            <p>API layer for the V-AFE ecosystem deployed on Vercel. Provider router (Gemini, OpenAI, Anthropic) with chat, insight extraction, analytics, and sync endpoints. Powers the portfolio chat widget.</p>
+            <div class="tech">TypeScript · Node.js · Vercel · Gemini · OpenAI · Anthropic</div>
+          </div>
+
+          <div class="project">
+            <div class="project-header">
+              <h3>NEWS-RECOMMENDER</h3>
+              <a class="project-link" href="https://github.com/dizel0110/news-recommender" target="_blank">github →</a>
+            </div>
+            <div class="role">Production MLOps Pipeline</div>
+            <p>Scalable news recommendation system with MLflow tracking, DVC data versioning, Ray distributed compute, and LaBSE embeddings for multilingual content personalization. Supported by Yandex.Q &amp; ODS.ai community.</p>
+            <div class="tech">MLflow · DVC · Ray · LaBSE · Docker · CI/CD</div>
+          </div>
+
+          <div class="project">
+            <div class="project-header">
+              <h3>ITMO MedTech</h3>
+              <a class="project-link" href="https://github.com/dizel0110/ITMO" target="_blank">github →</a>
+            </div>
+            <div class="role">Computer Vision Service</div>
+            <p>Medical imaging analysis pipeline: object detection, segmentation, and classification. FastAPI backend with Telegram Bot integration and message queue for async processing.</p>
+            <div class="tech">FastAPI · OpenCV · YOLO · Telegram Bot · Python</div>
+          </div>
+
+          <div class="project">
+            <div class="project-header">
+              <h3>Portfolio Site</h3>
+              <a class="project-link" href="https://github.com/dizel0110/dizel0110.github.io" target="_blank">github →</a>
+            </div>
+            <div class="role">Personal Brand · React 19</div>
+            <p>Single-page portfolio with "Red Sea Cyber-Minimalism" design. Features embedded RAG chat widget with 3 modes (kiting, portfolio, general). ROI calculator, GitHub pulse simulation, smooth scroll animations. Deployed on GitHub Pages with Vercel API backend.</p>
+            <div class="tech">React 19 · TypeScript · Vite · Framer Motion · Lenis · GitHub Pages</div>
+          </div>
+
+        </div>
+
+        <!-- Education -->
+        <div class="section">
+          <h2>Education</h2>
+
+          <div class="edu-item">
+            <h3>HARDML — Hardcore ML Course</h3>
+            <div class="meta">Completed August 2022 · Deep dive into ML/DL theory, mathematics, algorithms, neural networks</div>
+          </div>
+
+          <div class="edu-item">
+            <h3>ITMO University — ML Engineering</h3>
+            <div class="meta">Applied ML projects with industry partners. Medical CV, recommendation systems, production pipelines.</div>
+          </div>
+
+          <div class="edu-item">
+            <h3>Self-Education &amp; Research</h3>
+            <div class="meta">Continuous learning: LLM fine-tuning, RAG architectures, multi-agent systems, MLOps. Following latest ML/AI research.</div>
+          </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="section">
+          <h2>Achievements</h2>
+          <div class="badge-row">
+            <span class="badge">📄 SSPP 2026 Paper Submitted</span>
+            <span class="badge">🏆 YSDA Security — 300/300</span>
+            <span class="badge">📊 Kaggle VibeCoding Capstone</span>
+            <span class="badge">⚡ GitHub Quickdraw</span>
+            <span class="badge">❄️ Arctic Code Vault</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Built with ❤️ in El Gouna, Red Sea · Updated July 2026 · <a href="https://dizel0110.github.io" style="color:var(--accent)">dizel0110.github.io</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
