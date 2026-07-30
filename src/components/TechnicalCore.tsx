@@ -47,6 +47,69 @@ export default function TechnicalCore() {
           <GitHubPulse />
         </div>
       </div>
+
+      {/* Achievements */}
+      <div style={{
+        marginTop: '1.5rem',
+        paddingTop: '1.25rem',
+        borderTop: '1px solid var(--glass-border)',
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          marginBottom: '0.75rem',
+        }}>
+          <span className="mono-text" style={{ fontSize: '0.6875rem', color: '#64748b' }}>
+            ACHIEVEMENTS
+          </span>
+        </div>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '0.5rem',
+        }}>
+          {[
+            { label: '📄 SSPP 2026 Paper Submitted', href: 'https://github.com/dizel0110/Text-HRM-RAG' },
+            { label: '🏆 YSDA Security — 300/300', href: 'https://contest.yandex.com/contest/95444/' },
+            { label: '📊 Kaggle VibeCoding Capstone', href: 'https://www.kaggle.com/competitions/vibecoding-agents-capstone-project/writeups/ai-prophet-multi-agent-massage-therapy-consultan' },
+            { label: '⚡ GitHub Quickdraw', href: 'https://github.com/dizel0110?tab=achievements' },
+            { label: '❄️ Arctic Code Vault', href: 'https://github.com/dizel0110?tab=achievements' },
+          ].map((badge) => (
+            <a
+              key={badge.label}
+              href={badge.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mono-text"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                padding: '0.35rem 0.75rem',
+                borderRadius: '20px',
+                fontSize: '0.6875rem',
+                color: '#94a3b8',
+                border: '1px solid var(--glass-border)',
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--accent-cyan)';
+                e.currentTarget.style.color = 'var(--accent-cyan)';
+                e.currentTarget.style.background = 'rgba(6, 182, 212, 0.08)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--glass-border)';
+                e.currentTarget.style.color = '#94a3b8';
+                e.currentTarget.style.background = 'transparent';
+              }}
+            >
+              {badge.label}
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
