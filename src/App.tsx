@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Lenis from 'lenis';
 import Hero from './components/Hero';
+import MassageSection from './components/MassageSection';
 import TechnicalCore from './components/TechnicalCore';
 import Lifestyle from './components/Lifestyle';
 import KnowledgeBase from './components/KnowledgeBase';
@@ -37,6 +38,7 @@ function App() {
       <Navigation />
       <main>
         <Hero />
+        <MassageSection />
         <TechnicalCore />
         <Lifestyle />
         <KnowledgeBase />

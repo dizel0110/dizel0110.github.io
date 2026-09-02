@@ -81,6 +81,33 @@ export default function Navigation() {
                 {item.label}
               </a>
             ))}
+
+            {/* Main project CTA — massage.zeleninas */}
+            <a
+              href="/massage-zeleninas/"
+              className="mono-text"
+              style={{
+                color: '#06281b',
+                textDecoration: 'none',
+                padding: '0.5rem 1rem',
+                borderRadius: '8px',
+                fontWeight: 700,
+                fontSize: '0.8125rem',
+                background: 'linear-gradient(135deg, var(--accent-turquoise), var(--accent-cyan))',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                marginLeft: '0.25rem',
+              }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(6,182,212,0.35)';
+                }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              💆 massage.zeleninas
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -154,6 +181,28 @@ export default function Navigation() {
                   {item.label}
                 </motion.a>
               ))}
+
+              {/* Main project CTA — massage.zeleninas (mobile) */}
+              <motion.a
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: navItems.length * 0.1 }}
+                href="/massage-zeleninas/"
+                onClick={() => setIsMobileOpen(false)}
+                className="mono-text"
+                style={{
+                  color: '#06281b',
+                  textDecoration: 'none',
+                  fontWeight: 700,
+                  padding: '1rem',
+                  borderRadius: '8px',
+                  fontSize: '0.9375rem',
+                  marginTop: '0.5rem',
+                  background: 'linear-gradient(135deg, var(--accent-turquoise), var(--accent-cyan))',
+                }}
+              >
+                💆 massage.zeleninas — наш проект
+              </motion.a>
             </div>
           </motion.div>
         )}

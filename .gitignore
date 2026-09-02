@@ -26,6 +26,7 @@ assets/
 
 # Internal docs, chats, and ad-hoc scripts
 .internal/
+.build-tmp/
 
 # Python
 .venv/
@@ -33,6 +34,11 @@ venv/
 __pycache__/
 *.pyc
 *.pyo
-.env
+
+# Sensitive per-page env (massage-zeleninas etc.)
+**/.env
+*.env
+site-src/massage-zeleninas/env
+
 AGENTS.md
 resume.html
