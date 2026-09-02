@@ -39,7 +39,7 @@ export default function MassageSection() {
         }}>
           <HeartPulse size={20} style={{ color: 'var(--accent-cyan)' }} />
           <span className="mono-text" style={{ color: '#94a3b8', fontSize: '0.8rem' }}>
-            ОСНОВНОЙ ПРОЕКТ · СОВМЕСТНЫЙ БЛОГ
+            FEATURED PROJECT · CO-WRITTEN BLOG
           </span>
         </div>
 
@@ -48,8 +48,8 @@ export default function MassageSection() {
           lineHeight: 1.15,
           marginBottom: '1rem',
         }}>
-          <span style={{ color: '#f1f5f9' }}>Реабилитация организма.</span>{' '}
-          <span className="gradient-text">Путь Зелениных</span>
+          <span style={{ color: '#f1f5f9' }}>Smart Body Recovery.</span>{' '}
+          <span className="gradient-text">The Zelenins' Path</span>
         </h2>
 
         <p className="mono-text" style={{
@@ -57,14 +57,15 @@ export default function MassageSection() {
           maxWidth: '760px',
           marginBottom: '1.5rem',
         }}>
-          Классический и спортивный массаж, МФР, фитнес-нутрициология и биомеханика.
-          Восстановление организма сочетанием профессионального массажа, движения,
-          питания и индивидуального подхода — на всех площадках.
+          Classic and sports massage, SMR, fitness nutrition and biomechanics.
+          Restoring the body by combining professional massage, movement,
+          nutrition and an individual approach — across every platform.
         </p>
 
         <p style={{ color: '#cbd5e1', marginBottom: '2rem', maxWidth: '760px' }}>
-          Мы пишем и снимаем о том, как вернуть телу свободу движения: разборы техник,
-          польза МФР, тренировочные рутины и рекомендации по восстановлению после нагрузок.
+          We write and film about how to give your body back its freedom of movement:
+          technique breakdowns, the benefits of SMR, training routines and post-workout
+          recovery advice.
         </p>
 
         <div style={{
@@ -121,7 +122,7 @@ export default function MassageSection() {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          Открыть страницу проекта →
+          Open project page →
         </a>
       </motion.div>
     </section>

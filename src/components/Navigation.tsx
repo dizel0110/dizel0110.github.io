@@ -201,7 +201,7 @@ export default function Navigation() {
                   background: 'linear-gradient(135deg, var(--accent-turquoise), var(--accent-cyan))',
                 }}
               >
-                💆 massage.zeleninas — наш проект
+                💆 massage.zeleninas — our project
               </motion.a>
             </div>
           </motion.div>

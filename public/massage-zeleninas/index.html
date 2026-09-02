@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>massage.zeleninas — Реабилитация организма. Путь Зелениных.</title>
-  <meta name="description" content="Массаж и реабилитация организма. Классический и спортивный массаж, МФР, фитнес, биомеханика. Путь Зелениных." />
+  <title>massage.zeleninas — Smart Body Recovery. The Zelenins' Path.</title>
+  <meta name="description" content="Massage and body rehabilitation. Classic and sports massage, SMR, fitness, biomechanics. The Zelenins' Path." />
   <meta name="theme-color" content="#0f172a" />
-  <!-- Open Graph для соцсетей -->
-  <meta property="og:title" content="massage.zeleninas — Реабилитация организма" />
-  <meta property="og:description" content="Массаж, МФР, фитнес-нутрициология и биомеханика. Путь Зелениных." />
+  <!-- Open Graph for social networks -->
+  <meta property="og:title" content="massage.zeleninas — Smart Body Recovery" />
+  <meta property="og:description" content="Massage, SMR, fitness nutrition and biomechanics. The Zelenins' Path." />
   <meta property="og:image" content="logo.jpg" />
   <meta property="og:url" content="https://dizel0110.github.io/massage-zeleninas/" />
   <style>
-    /* ============ Самодостаточные стили (без внешних зависимостей) ============ */
+    /* ============ Self-contained styles (no external dependencies) ============ */
     :root {
       --bg: #0f172a;
       --bg-soft: #1e293b;
       --panel: rgba(255,255,255,0.04);
       --border: rgba(255,255,255,0.10);
-      --accent: #34d399;   /* здоровый зелёный */
+      --accent: #34d399;   /* healthy green */
       --accent-cyan: #38bdf8;
       --text: #e2e8f0;
       --muted: #94a3b8;
@@ -38,7 +38,36 @@
     }
     .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 64px; }
 
-    /* Брендинг */
+    /* Toolbar — Back to Portfolio (hidden on print) */
+    .toolbar {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      display: flex;
+      gap: 8px;
+    }
+    .toolbar a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(15,23,42,.75);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all .2s ease;
+    }
+    .toolbar a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .toolbar svg { flex-shrink: 0; }
+    @media print { .toolbar { display: none !important; } }
+    @media (max-width: 600px) { .toolbar { top: 10px; right: 10px; } .toolbar a { padding: 8px 12px; font-size: 12px; } }
+
+    /* Branding */
     .brand {
       display: flex; align-items: center; gap: 16px;
       padding: 14px 18px; margin-bottom: 40px;
@@ -63,7 +92,7 @@
     }
     .hero p { max-width: 680px; margin: 0 auto; color: var(--muted); font-size: clamp(1rem, 2vw, 1.15rem); }
 
-    /* Сетка карточек */
+    /* Card grid */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin-top: 48px; }
     .card {
       background: var(--panel);
@@ -77,7 +106,7 @@
     .card h3 { font-size: 1.05rem; margin-bottom: 8px; color: #f1f5f9; }
     .card p { color: var(--muted); font-size: .92rem; }
 
-    /* Соцсети */
+    /* Social networks */
     .socials { margin-top: 56px; }
     .socials h2 { font-size: 1.3rem; margin-bottom: 6px; text-align: center; }
     .socials .sub { text-align: center; color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
@@ -90,12 +119,12 @@
       transition: all .25s ease;
     }
     .link:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
-    .link .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
-    .link.fb:hover .dot{background:#1877f2} .link.ig:hover .dot{background:#e1306c}
-    .link.yt:hover .dot{background:#ff0000} .link.tg:hover .dot{background:#229ed9}
-    .link.wa:hover .dot{background:#25d366}
+    .link svg { flex-shrink: 0; }
+    .link.fb:hover svg{fill:#1877f2} .link.ig:hover svg{stroke:#e1306c}
+    .link.yt:hover svg{fill:#ff0000} .link.tg:hover svg{fill:#229ed9}
+    .link.wa:hover svg{fill:#25d366}
 
-    /* CTA / запись */
+    /* CTA / booking */
     .cta {
       margin-top: 56px; padding: clamp(26px, 4vw, 40px);
       text-align: center; border-radius: 22px;
@@ -123,73 +152,97 @@
   </style>
 </head>
 <body>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <a href="https://dizel0110.github.io" onclick="window.location.href='https://dizel0110.github.io'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Portfolio
+    </a>
+  </div>
+
   <div class="wrap">
-    <!-- Брендинг -->
+    <!-- Branding -->
     <div class="brand">
       <img src="logo.jpg" alt="massage.zeleninas" />
       <div>
         <div class="t1">massage.zeleninas</div>
-        <div class="t2">Реабилитация организма · Путь Зелениных</div>
+        <div class="t2">Smart Body Recovery · The Zelenins' Path</div>
       </div>
     </div>
 
     <!-- Hero -->
     <section class="hero">
-      <h1>Верни телу свободу движения</h1>
+      <h1>Give your body back its freedom of movement</h1>
       <p>
-        Классический и спортивный массаж · МФР · фитнес-нутрициология · биомеханика.
-        Путь Зелениных — восстановление организма сочетанием профессионального
-        массажа, физической активности, правильного питания и индивидуального подхода.
+        Classic and sports massage · SMR · fitness nutrition · biomechanics.
+        The Zelenins' Path — restoring the body by combining professional massage,
+        physical activity, proper nutrition and an individual approach.
       </p>
     </section>
 
-    <!-- Направления -->
+    <!-- Focus areas -->
     <section class="grid">
       <div class="card">
         <div class="icon">💆</div>
-        <h3>Классический массаж</h3>
-        <p>Расслабление, снятие напряжения, восстановление тонуса и кровообращения.</p>
+        <h3>Classic Massage</h3>
+        <p>Relaxation, releasing tension, restoring tone and circulation.</p>
       </div>
       <div class="card">
         <div class="icon">🏋️</div>
-        <h3>Спортивный массаж</h3>
-        <p>Подготовка и восстановление после нагрузок, работа с перегруженными группами мышц.</p>
+        <h3>Sports Massage</h3>
+        <p>Preparation and recovery after training, working with overloaded muscle groups.</p>
       </div>
       <div class="card">
         <div class="icon">🧘</div>
-        <h3>МФР</h3>
-        <p>Миофасциальный релиз — техники работы с фасциями, гибкость и подвижность суставов.</p>
+        <h3>SMR / Myofascial Release</h3>
+        <p>Fascia work, joint mobility and flexibility techniques to improve movement quality.</p>
       </div>
       <div class="card">
         <div class="icon">🥗</div>
-        <h3>Фитнес-нутрициология</h3>
-        <p>Биомеханика и питание как основа здоровья и долгосрочной реабилитации.</p>
+        <h3>Fitness Nutrition</h3>
+        <p>Biomechanics and nutrition as the foundation of health and long-term rehabilitation.</p>
       </div>
     </section>
 
-    <!-- Соцсети -->
+    <!-- Social networks -->
     <section class="socials">
-      <h2>Мы в сети</h2>
-      <p class="sub">Подписывайся, чтобы не пропускать разборы техник и советы</p>
+      <h2>Find us online</h2>
+      <p class="sub">Follow along for technique breakdowns and recovery advice</p>
       <div class="links">
-        <a class="link fb" href="https://www.facebook.com/massage.zeleninas/" target="_blank" rel="noopener noreferrer"><span class="dot"></span> Facebook</a>
-        <a class="link ig" href="https://www.instagram.com/massage_zeleninas/" target="_blank" rel="noopener noreferrer"><span class="dot"></span> Instagram</a>
-        <a class="link yt" href="https://www.youtube.com/@massage_zeleninas" target="_blank" rel="noopener noreferrer"><span class="dot"></span> YouTube</a>
-        <a class="link tg" href="https://t.me/massage_zeleninas" target="_blank" rel="noopener noreferrer"><span class="dot"></span> Telegram</a>
-        <a class="link wa" href="https://wa.me/" target="_blank" rel="noopener noreferrer"><span class="dot"></span> WhatsApp</a>
+        <a class="link fb" href="https://www.facebook.com/massage.zeleninas/" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+        <a class="link ig" href="https://www.instagram.com/massage_zeleninas/" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+        <a class="link yt" href="https://www.youtube.com/@massage_zeleninas" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+          YouTube
+        </a>
+        <a class="link tg" href="https://t.me/massage_zeleninas" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2z"/></svg>
+          Telegram
+        </a>
+        <a class="link wa" href="https://wa.me/201019661628" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-3.8-.9L3 20l1-5.6a8.5 8.5 0 1 1 5.2 6.4 8.4 8.4 0 0 1-3.4 0"/><path d="M8.5 9.5c.5 0 1-.3 1.2.7l.5 1.6c.2.7 0 1-.5 1.4l-.6.5c.4 1.4 2.3 3.3 3.7 3.7l.5-.6c.4-.5.7-.7 1.4-.5l1.6.5c1 .2 1.2.7 1.2 1.2a2 2 0 0 1-2 2A8 8 0 0 1 5.3 12 5.5 5.5 0 0 1 8.5 9.5z"/></svg>
+          WhatsApp
+        </a>
       </div>
     </section>
 
     <!-- CTA -->
     <section class="cta">
-      <h2>Готов работать над своим телом?</h2>
-      <p>Напиши нам — подберём программу под твои задачи и нагрузку.</p>
-      <a class="btn" href="https://wa.me/" target="_blank" rel="noopener noreferrer">Записаться через WhatsApp</a>
+      <h2>Ready to work on your body?</h2>
+      <p>Message us — we'll build a program around your goals and workload.</p>
+      <a class="btn" href="https://wa.me/201019661628" target="_blank" rel="noopener noreferrer">Book via WhatsApp</a>
     </section>
 
     <footer>
-      © 2026 massage.zeleninas · Путь Зелениных
-      &nbsp;·&nbsp; <a href="https://dizel0110.github.io/massage-zeleninas/">Сделано с ♥</a>
+      © 2026 massage.zeleninas · The Zelenins' Path
+      &nbsp;·&nbsp; <a href="https://dizel0110.github.io/massage-zeleninas/">Made with ♥</a>
     </footer>
   </div>
 </body>
