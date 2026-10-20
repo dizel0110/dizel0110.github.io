@@ -240,6 +240,32 @@ export default function Hero() {
           >
             📄 Resume
           </a>
+          <a
+            href="/medialab/"
+            className="glass-card glass-card-hover"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.875rem 1.75rem',
+              textDecoration: 'none',
+              color: '#06281b',
+              fontWeight: 700,
+              fontSize: '0.875rem',
+              background: 'linear-gradient(135deg, var(--accent-turquoise), var(--accent-cyan))',
+              transition: 'all 0.3s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(6,182,212,0.35)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            🎬 Media Lab
+          </a>
         </motion.div>
       </div>
 

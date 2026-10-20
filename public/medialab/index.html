@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media Lab — Photo to Video | dizel0110</title>
+  <meta name="description" content="Bring a photo to life: upload an image, describe the motion, get a cinematic MP4. A free experiment by dizel0110 — generative media, no signup." />
+  <meta name="theme-color" content="#020617" />
+  <meta property="og:title" content="Media Lab — Photo to Video" />
+  <meta property="og:description" content="Upload a photo, describe the motion, get a cinematic clip. Free generative media experiment." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dizel0110.github.io/medialab/" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AC%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --bg-primary: #020617;
+      --bg-secondary: #0a0f24;
+      --bg-tertiary: #111836;
+      --accent-turquoise: #40e0d0;
+      --accent-cyan: #06b6d4;
+      --accent-seafoam: #2dd4bf;
+      --glass-bg: rgba(6, 182, 212, 0.08);
+      --glass-border: rgba(6, 182, 212, 0.15);
+      --glass-highlight: rgba(64, 224, 208, 0.1);
+      --gradient-sea: linear-gradient(135deg, var(--accent-turquoise) 0%, var(--accent-cyan) 100%);
+      --shadow-glow: 0 0 40px rgba(6, 182, 212, 0.15);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --radius: 16px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Geist Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace;
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(6,182,212,0.12) 0%, transparent 60%),
+        radial-gradient(1000px 500px at 0% 100%, rgba(64,224,208,0.08) 0%, transparent 55%),
+        var(--bg-primary);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent-cyan); }
+
+    .toolbar {
+      position: fixed; top: 16px; right: 16px; z-index: 100;
+      display: flex; gap: 8px;
+    }
+    .toolbar a {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border: 1px solid var(--glass-border);
+      border-radius: 10px; background: rgba(2,6,23,.8);
+      backdrop-filter: blur(10px); color: var(--text);
+      text-decoration: none; font-size: 13px; font-weight: 600;
+      transition: all .2s ease;
+    }
+    .toolbar a:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); transform: translateY(-1px); }
+    @media (max-width: 600px) { .toolbar { top: 10px; right: 10px; } .toolbar a { padding: 8px 12px; font-size: 12px; } }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 96px 20px 64px; }
+
+    .brand {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; margin-bottom: 32px;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 14px; backdrop-filter: blur(10px);
+    }
+    .brand .ico {
+      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; background: var(--gradient-sea);
+    }
+    .brand .t1 { font-size: 1.15rem; font-weight: 700; letter-spacing: .3px; }
+    .brand .t2 { font-size: 12px; color: var(--muted); }
+
+    h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin-bottom: 12px; font-weight: 650; letter-spacing: -0.02em; }
+    .grad { background: var(--gradient-sea); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { color: var(--muted); max-width: 760px; margin-bottom: 28px; font-size: 15px; }
+
+    .lab {
+      display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+      gap: 24px; align-items: start;
+    }
+    @media (max-width: 860px) { .lab { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius); padding: 22px; backdrop-filter: blur(12px);
+    }
+    .panel h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin-bottom: 16px; font-weight: 600; }
+
+    label { display: block; font-size: 12px; color: var(--muted); margin: 14px 0 6px; letter-spacing: .4px; }
+    label:first-of-type { margin-top: 0; }
+
+    .drop {
+      border: 1.5px dashed var(--glass-border); border-radius: 12px;
+      padding: 22px; text-align: center; cursor: pointer;
+      transition: all .2s ease; background: rgba(2,6,23,.35);
+      position: relative; overflow: hidden;
+    }
+    .drop:hover, .drop.drag { border-color: var(--accent-cyan); background: var(--glass-highlight); }
+    .drop .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .drop .big { font-size: 26px; }
+    .drop img { max-width: 100%; max-height: 220px; border-radius: 8px; display: block; margin: 0 auto; }
+    .drop input { display: none; }
+
+    textarea, select, input[type=text] {
+      width: 100%; background: rgba(2,6,23,.6); color: var(--text);
+      border: 1px solid var(--glass-border); border-radius: 10px;
+      padding: 10px 12px; font-family: inherit; font-size: 13px; resize: vertical;
+      transition: border-color .2s;
+    }
+    textarea:focus, select:focus, input:focus { outline: none; border-color: var(--accent-cyan); }
+    textarea { min-height: 74px; }
+
+    .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .chip {
+      font-size: 11.5px; padding: 5px 11px; border-radius: 999px; cursor: pointer;
+      border: 1px solid var(--glass-border); background: rgba(2,6,23,.5);
+      color: var(--muted); transition: all .18s ease; user-select: none;
+    }
+    .chip:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+    .chip.on { background: var(--gradient-sea); color: #04231f; border-color: transparent; font-weight: 700; }
+
+    .row { display: flex; gap: 12px; }
+    .row > div { flex: 1; }
+
+    .btn {
+      width: 100%; margin-top: 20px; padding: 13px; border: none;
+      border-radius: 11px; background: var(--gradient-sea); color: #04231f;
+      font-weight: 800; font-size: 14px; font-family: inherit; cursor: pointer;
+      transition: transform .15s, box-shadow .15s, opacity .2s;
+    }
+    .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(6,182,212,.35); }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+    .btn.ghost {
+      background: transparent; color: var(--accent-cyan); border: 1px solid var(--glass-border);
+    }
+    .notebox {
+      margin-top: 14px; font-size: 11.5px; color: var(--muted);
+      background: rgba(6,182,212,.06); border: 1px solid var(--glass-border);
+      border-radius: 10px; padding: 10px 12px; line-height: 1.5;
+    }
+    .notebox b { color: #cbd5e1; }
+
+    .stage {
+      min-height: 320px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+      background: rgba(2,6,23,.45); border: 1px solid var(--glass-border);
+      border-radius: var(--radius); padding: 24px; position: relative; overflow: hidden;
+    }
+    .stage video { max-width: 100%; max-height: 460px; border-radius: 12px; box-shadow: var(--shadow-glow); }
+    .stage .empty { text-align: center; color: var(--muted); }
+    .stage .empty .big { font-size: 42px; margin-bottom: 8px; opacity: .7; }
+
+    .progress { width: 100%; max-width: 460px; }
+    .bar { height: 8px; border-radius: 999px; background: rgba(2,6,23,.8); overflow: hidden; border: 1px solid var(--glass-border); }
+    .bar > i { display: block; height: 100%; width: 0%; background: var(--gradient-sea); transition: width .5s ease; }
+    .progress .lbl { font-size: 12px; color: var(--muted); margin-top: 10px; text-align: center; }
+    .spinner {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 3px solid var(--glass-border); border-top-color: var(--accent-cyan);
+      animation: spin .9s linear infinite; margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .err {
+      color: #fca5a5; font-size: 12.5px; background: rgba(220,38,38,.1);
+      border: 1px solid rgba(220,38,38,.3); border-radius: 10px;
+      padding: 10px 12px; max-width: 460px; text-align: center;
+    }
+
+    .gallery { margin-top: 40px; }
+    .gallery h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin-bottom: 14px; }
+    .gal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+    .gal-item {
+      border: 1px solid var(--glass-border); border-radius: 12px; overflow: hidden;
+      background: rgba(2,6,23,.5); transition: all .2s ease;
+    }
+    .gal-item:hover { border-color: var(--accent-cyan); transform: translateY(-2px); }
+    .gal-item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+    .gal-item .cap { padding: 7px 9px; font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .foot { margin-top: 56px; text-align: center; color: var(--muted); font-size: 12px; }
+    .foot a { color: var(--muted); text-decoration: none; }
+    .foot a:hover { color: var(--accent-cyan); }
+    .stack { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <nav class="toolbar">
+    <a href="/">← Portfolio</a>
+  </nav>
+
+  <div class="wrap">
+    <div class="brand">
+      <div class="ico">🎬</div>
+      <div>
+        <div class="t1"><span class="grad">Media Lab</span> · Photo → Video</div>
+        <div class="t2">Generative media experiment by dizel0110</div>
+      </div>
+    </div>
+
+    <h1>Bring a still to <span class="grad">life</span>.</h1>
+    <p class="lede">
+      Upload a photo, describe the motion, and get a cinematic clip — generated in the cloud,
+      no signup, no watermark. This is my public playground for generative media: the same
+      pipeline I use to turn stills into video for my own projects.
+    </p>
+
+    <div class="lab">
+      <!-- Controls -->
+      <div class="panel">
+        <h2>1 · Source</h2>
+        <label>Your photo</label>
+        <div class="drop" id="drop">
+          <div class="big">🖼️</div>
+          <div>Click or drop an image</div>
+          <div class="hint">JPG / PNG / WebP · auto-resized client-side</div>
+          <input type="file" id="file" accept="image/*" />
+        </div>
+
+        <h2 style="margin-top:24px;">2 · Motion</h2>
+        <label for="prompt">Describe the movement</label>
+        <textarea id="prompt" placeholder="the character turns to the camera, gentle wind, cinematic drift...">gentle cinematic camera push-in, subtle parallax, atmospheric haze, natural motion</textarea>
+        <div class="presets" id="presets"></div>
+        <label style="display:flex;align-items:center;gap:8px;margin-top:14px;cursor:pointer;">
+          <input type="checkbox" id="enhance" checked style="width:auto;" />
+          <span style="font-size:12px;color:var(--muted);">Enhance prompt with cinematic modifiers</span>
+        </label>
+
+        <div class="row" style="margin-top:14px;">
+          <div>
+            <label for="duration">Duration</label>
+            <select id="duration">
+              <option value="5" selected>5 s</option>
+              <option value="8">8 s</option>
+              <option value="10">10 s</option>
+            </select>
+          </div>
+          <div>
+            <label for="ratio">Aspect</label>
+            <select id="ratio">
+              <option value="16:9" selected>16:9 landscape</option>
+              <option value="9:16">9:16 portrait</option>
+              <option value="1:1">1:1 square</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top:14px;">
+          <div>
+            <label for="motion">Motion strength</label>
+            <select id="motion">
+              <option value="subtle">Subtle</option>
+              <option value="balanced" selected>Balanced</option>
+              <option value="dynamic">Dynamic</option>
+            </select>
+          </div>
+          <div>
+            <label for="seed">Seed</label>
+            <input type="text" id="seed" placeholder="random" inputmode="numeric" />
+          </div>
+        </div>
+
+        <button class="btn" id="go" disabled>✨ Generate video</button>
+
+        <div class="notebox">
+          <b>⏳ Generation can take 1–3 minutes.</b> The clip is rendered on a remote GPU —
+          keep this tab open while it works. If one provider is busy, the lab automatically
+          falls back to another.
+        </div>
+      </div>
+
+      <!-- Stage -->
+      <div class="panel" style="padding:14px;">
+        <div class="stage" id="stage">
+          <div class="empty" id="empty">
+            <div class="big">🎞️</div>
+            <div>Your generated clip will appear here</div>
+          </div>
+
+          <div class="progress" id="progress" style="display:none;">
+            <div class="spinner" id="spinner"></div>
+            <div class="bar" style="margin-top:14px;"><i id="barfill"></i></div>
+            <div class="lbl" id="stage-lbl">Preparing…</div>
+          </div>
+
+          <div class="err" id="err" style="display:none;">
+            <div id="err-msg"></div>
+            <button class="btn ghost" id="retry" style="margin-top:12px;">↻ Try again</button>
+          </div>
+
+          <video id="video" controls playsinline style="display:none;"></video>
+
+          <div id="actions" style="display:none;width:100%;max-width:460px;gap:10px;flex-direction:row;">
+            <a class="btn ghost" id="download" download="medialab.mp4" style="text-align:center;text-decoration:none;margin-top:0;">⬇ Download MP4</a>
+            <button class="btn ghost" id="again" style="margin-top:0;">↺ Another take</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery" id="galleryWrap" style="display:none;">
+      <h2>Recent takes (this device)</h2>
+      <div class="gal-grid" id="gallery"></div>
+    </div>
+
+    <div class="foot">
+      <div>© 2026 dizel0110 · Architecting LLMs. Mastering the Wind.</div>
+      <div class="stack">
+        <a href="/">Portfolio</a>
+        <a href="/resume.html">Résumé</a>
+        <a href="https://github.com/dizel0110" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ------------------------------------------------------------------
+       Media Lab — Photo → Video
+       Providers:
+         1) PixelSter  (keyless, no watermark, real image-to-video, CORS *)
+         2) Pollinations classic fallback → client-side Ken Burns (free)
+       No secrets, no backend: everything runs client-side.
+    ------------------------------------------------------------------ */
+    const $ = (id) => document.getElementById(id);
+
+    const PRESETS = [
+      { name: 'Cinematic push-in', text: 'slow cinematic camera push-in, shallow depth of field, film grain, natural motion' },
+      { name: 'Parallax drift',    text: 'subtle parallax camera drift, foreground and background separation, atmospheric haze' },
+      { name: 'Living portrait',   text: 'subject turns to camera, gentle breathing, soft light shifts, hair moves in the wind' },
+      { name: 'Nature breeze',     text: 'gentle wind moves the foliage, clouds drift slowly, warm sunlight flickers' },
+      { name: 'Cinemagraph',       text: 'mostly still scene with a single element subtly moving, cinematic freeze, film look' },
+      { name: 'Ken Burns',         text: 'smooth ken burns zoom and pan across the frame, documentary style' },
+    ];
+
+    const ENHANCERS = {
+      subtle:   'subtle, minimal motion, low amplitude, delicate',
+      balanced: 'smooth natural motion, cinematic, film look',
+      dynamic:  'dynamic motion, energetic camera movement, dramatic',
+    };
+
+    let currentB64 = null;     // data URL of the uploaded (resized) image
+    let busy = false;
+
+    /* ---------- Presets ---------- */
+    const presetsEl = $('presets');
+    PRESETS.forEach((p) => {
+      const c = document.createElement('span');
+      c.className = 'chip';
+      c.textContent = p.name;
+      c.onclick = () => {
+        document.querySelectorAll('.chip').forEach((x) => x.classList.remove('on'));
+        c.classList.add('on');
+        $('prompt').value = p.text;
+      };
+      presetsEl.appendChild(c);
+    });
+
+    /* ---------- Upload + client-side resize ---------- */
+    const drop = $('drop');
+    const fileInput = $('file');
+
+    const readImage = (file) => {
+      if (!file || !file.type.startsWith('image/')) {
+        showError('Please choose an image file (JPG, PNG or WebP).');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => resizeImage(reader.result);
+      reader.readAsDataURL(file);
+    };
+
+    // Cap the longest side at 1280px and encode JPEG ~0.9 to keep the upload small.
+    const resizeImage = (dataUrl) => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 1280;
+        let { width: w, height: h } = img;
+        if (Math.max(w, h) > MAX) {
+          const k = MAX / Math.max(w, h);
+          w = Math.round(w * k); h = Math.round(h * k);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const out = canvas.toDataURL('image/jpeg', 0.9);
+        currentB64 = out.split(',')[1]; // raw base64 (no data: prefix)
+        drop.innerHTML = '';
+        const im = document.createElement('img');
+        im.src = out; drop.appendChild(im);
+        const meta = document.createElement('div');
+        meta.className = 'hint';
+        meta.textContent = `${w}×${h} · ready`;
+        drop.appendChild(meta);
+        $('go').disabled = false;
+        clearStage();
+      };
+      img.onerror = () => showError('Could not read that image.');
+      img.src = dataUrl;
+    };
+
+    drop.onclick = () => fileInput.click();
+    fileInput.onchange = (e) => readImage(e.target.files[0]);
+    ['dragenter', 'dragover'].forEach((ev) =>
+      drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('drag'); }));
+    ['dragleave', 'drop'].forEach((ev) =>
+      drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove('drag'); }));
+    drop.addEventListener('drop', (e) => readImage(e.dataTransfer.files[0]));
+
+    /* ---------- Stage helpers ---------- */
+    const setProgress = (pct, label) => {
+      $('progress').style.display = 'block';
+      $('empty').style.display = 'none';
+      $('err').style.display = 'none';
+      $('video').style.display = 'none';
+      $('actions').style.display = 'none';
+      $('barfill').style.width = Math.min(pct, 99) + '%';
+      if (label) $('stage-lbl').textContent = label;
+    };
+    const showError = (msg) => {
+      busy = false;
+      $('go').disabled = false;
+      $('progress').style.display = 'none';
+      $('empty').style.display = 'none';
+      $('video').style.display = 'none';
+      $('actions').style.display = 'none';
+      $('err-msg').textContent = msg;
+      $('err').style.display = 'block';
+    };
+    const clearStage = () => {
+      $('progress').style.display = 'none';
+      $('err').style.display = 'none';
+      $('video').style.display = 'none';
+      $('actions').style.display = 'none';
+      $('empty').style.display = 'block';
+    };
+
+    const buildMotionPrompt = () => {
+      let p = $('prompt').value.trim() || 'gentle cinematic motion';
+      if ($('enhance').checked) {
+        p += ', ' + ENHANCERS[$('motion').value];
+        p += ', ' + $('ratio').value + ' composition, high detail, photorealistic';
+      }
+      return p;
+    };
+
+    // Simpler prompt for the image fallback (Pollinations dislikes very long prompts).
+    const buildImagePrompt = () => {
+      const base = $('prompt').value.trim().split(',')[0] || 'cinematic scene';
+      return base + ', cinematic, high detail';
+    };
+
+    /* ---------- Providers ---------- */
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    // Low-level PixelSter call, with timeout.
+    async function pixelsterCall(timeoutMs) {
+      const body = JSON.stringify({
+        prompt: buildMotionPrompt(),
+        ratio: $('ratio').value,
+        duration: parseInt($('duration').value, 10),
+        imageBase64: currentB64,
+      });
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), timeoutMs);
+      try {
+        const res = await fetch('https://ahm7xmakki.com/api/ptv', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body,
+          signal: ctrl.signal,
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (!data.success || !data.videoUrl) throw new Error('no video in response');
+        return data.videoUrl;
+      } catch (e) {
+        if (e.name === 'AbortError') throw new Error('timed out');
+        // A CORS error surfaces as a generic TypeError in the browser.
+        if (e instanceof TypeError) throw new Error('network/CORS error');
+        throw e;
+      } finally {
+        clearTimeout(t);
+      }
+    }
+
+    // Provider 1 — PixelSter image→video (keyless, no watermark). One retry, since it is flaky.
+    async function pixelster(onRetry) {
+      try {
+        return await pixelsterCall(6 * 60 * 1000);
+      } catch (e) {
+        if (onRetry) onRetry();
+        await sleep(4000);
+        return await pixelsterCall(6 * 60 * 1000);
+      }
+    }
+
+    // Provider 2 — Pollinations classic (image) + client-side Ken Burns → WebM.
+    async function pollinationsKenBurns() {
+      const prompt = encodeURIComponent(buildImagePrompt());
+      const dim = { '16:9': [1024, 576], '9:16': [576, 1024], '1:1': [768, 768] }[$('ratio').value];
+      const seed = Math.floor(Math.random() * 1e6);
+      const url = `https://image.pollinations.ai/prompt/${prompt}?width=${dim[0]}&height=${dim[1]}&seed=${seed}`;
+      const img = await new Promise((ok, no) => {
+        const i = new Image();
+        i.crossOrigin = 'anonymous';
+        i.onload = () => ok(i);
+        i.onerror = () => no(new Error('image provider blocked the request (rate limit?)'));
+        i.src = url;
+      });
+      return kenBurnsToWebm(img, parseInt($('duration').value, 10));
+    }
+
+    // Animate a still image with pan/zoom on canvas → WebM (free, local).
+    function kenBurnsToWebm(img, seconds) {
+      return new Promise((resolve, reject) => {
+        const W = img.width, H = img.height;
+        const canvas = document.createElement('canvas');
+        canvas.width = W; canvas.height = H;
+        const ctx = canvas.getContext('2d');
+        const stream = canvas.captureStream(30);
+        let mime = 'video/webm;codecs=vp9';
+        if (!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm';
+        if (!MediaRecorder.isTypeSupported(mime)) return reject(new Error('WebM recording unsupported in this browser'));
+        const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 4_000_000 });
+        const chunks = [];
+        rec.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
+        rec.onstop = () => {
+          const blob = new Blob(chunks, { type: 'video/webm' });
+          resolve(URL.createObjectURL(blob));
+        };
+        rec.start();
+        const t0 = performance.now();
+        const durMs = seconds * 1000;
+        const draw = (now) => {
+          const t = Math.min((now - t0) / durMs, 1);
+          const zoom = 1 + 0.14 * t;          // slow zoom-in
+          const sw = W / zoom, sh = H / zoom;
+          const sx = (W - sw) * t;            // gentle pan
+          const sy = (H - sh) * (0.5);
+          ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+          if (t < 1) requestAnimationFrame(draw);
+          else rec.stop();
+        };
+        requestAnimationFrame(draw);
+      });
+    }
+
+    /* ---------- Orchestrator ---------- */
+    // A creep timer that nudges the bar forward while a slow provider works.
+    // Returns { set(pct,label), stop() }. stop() is idempotent.
+    function makeCreep() {
+      let timer = null;
+      let cur = 0;
+      const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+      const set = (p, l) => {
+        stop();
+        cur = p;
+        setProgress(p, l);
+        timer = setInterval(() => {
+          cur = Math.min(cur + 1, 92);
+          $('barfill').style.width = cur + '%';
+        }, 1800);
+      };
+      return { set, stop };
+    }
+
+    async function generate() {
+      if (busy || !currentB64) return;
+      busy = true;
+      $('go').disabled = true;
+
+      const creep = makeCreep();
+      let videoUrl = null;
+      let via = 'PixelSter';
+
+      try {
+        creep.set(12, 'Uploading frame…');
+        try {
+          videoUrl = await pixelster(() => creep.set(12, 'Provider busy — retrying…'));
+        } catch (e1) {
+          creep.set(30, 'Primary provider busy — switching to fallback…');
+          videoUrl = await pollinationsKenBurns();
+          via = 'Fallback (Ken Burns)';
+        }
+
+        if (!videoUrl) throw new Error('No video produced.');
+        creep.stop();
+        setProgress(100, 'Done');
+
+        const v = $('video');
+        v.src = videoUrl;
+        v.style.display = 'block';
+        $('progress').style.display = 'none';
+        $('empty').style.display = 'none';
+        $('video').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        const dl = $('download');
+        dl.href = videoUrl;
+        dl.download = 'medialab-' + Date.now() + '.mp4';
+        $('actions').style.display = 'flex';
+        addToGallery(videoUrl, via);
+      } catch (e) {
+        creep.stop();
+        showError('Generation failed: ' + (e.message || 'unknown error') + '. Try again — providers can be busy.');
+      } finally {
+        creep.stop();
+        busy = false;
+        $('go').disabled = false;
+      }
+    }
+
+    $('go').onclick = generate;
+    $('again').onclick = () => { clearStage(); $('go').disabled = false; };
+    $('retry').onclick = () => { clearStage(); $('go').disabled = false; generate(); };
+
+    /* ---------- Gallery (localStorage, this device) ---------- */
+    const GAL_KEY = 'medialab_gallery_v1';
+    const loadGal = () => { try { return JSON.parse(localStorage.getItem(GAL_KEY)) || []; } catch { return []; } };
+    const saveGal = (g) => { try { localStorage.setItem(GAL_KEY, JSON.stringify(g.slice(0, 9))); } catch {} };
+    const addToGallery = (url, via) => {
+      if (url.startsWith('blob:')) return; // blob URLs die on reload; skip persisting
+      const g = loadGal();
+      g.unshift({ url, via, t: Date.now() });
+      saveGal(g);
+      renderGallery();
+    };
+    const renderGallery = () => {
+      const g = loadGal();
+      if (!g.length) { $('galleryWrap').style.display = 'none'; return; }
+      $('galleryWrap').style.display = 'block';
+      const box = $('gallery');
+      box.innerHTML = '';
+      g.forEach((item) => {
+        const el = document.createElement('div');
+        el.className = 'gal-item';
+        el.innerHTML = `<video src="${item.url}" muted playsinline preload="metadata"></video>
+                        <div class="cap">${item.via} · ${new Date(item.t).toLocaleDateString()}</div>`;
+        el.querySelector('video').onmouseenter = (e) => e.target.play();
+        el.querySelector('video').onmouseleave = (e) => { e.target.pause(); e.target.currentTime = 0; };
+        box.appendChild(el);
+      });
+    };
+    renderGallery();
+  </script>
+</body>
+</html>

@@ -7,6 +7,7 @@ const navItems = [
   { label: 'Lifestyle', href: '#lifestyle' },
   { label: 'Knowledge', href: '#knowledge-base' },
   { label: 'Investors', href: '#investors' },
+  { label: 'Media Lab', href: '/medialab/' },
   { label: 'Pitch Me', href: '#footer' },
 ];
 
